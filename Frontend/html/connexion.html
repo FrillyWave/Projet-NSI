@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jeu d'échecs - Connexion</title>
+    <link rel="stylesheet" href="../CSS/style_connexion.css">
+</head>
+<body>
+    <header>
+        <h1>Jeu d'échecs</h1>
+    </header>
+
+    <div id="connexion-container">
+        <form id="connexion-form" method="POST">
+            <label for="username">Nom d'utilisateur :</label>
+            <input type="text" id="username" name="username" placeholder="Entrez votre nom d'utilisateur" required><br><br>
+        
+            <label for="password">Mot de passe :</label>
+            <input type="password" id="password" name="password" placeholder="Entrez votre mot de passe" required><br><br>
+        
+            <button type="submit">Se connecter</button>
+            <p id="errorMessage" style="display: none;"></p> <!-- Message d'erreur -->
+            <p>Vous n'avez pas de compte ? <a href="../Frontend/creer_compte.html">Créez-en un ici</a></p>
+        </form>
+    </div>
+    
+
+    <footer>
+        <p>All rights reserved ©</p>
+    </footer>
+
+    <script src="../JS/script.js"></script>
+</body> 
+</html>
