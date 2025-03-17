@@ -47,3 +47,9 @@ class Piece:
 
 BP1 = Piece('C2', 'P', True)
 print(BP1)
+
+def generate() :
+    plateau = [[(x, y) for x in range(8)] for y in range(8)]
+    return plateau
+
+print(generate())
