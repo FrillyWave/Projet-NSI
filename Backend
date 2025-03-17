@@ -1,2 +1,49 @@
-#Le code en python de l'échequier
+#Class pièce 
 
+class Piece:
+    """
+    Permet de représenter une Piece dans l'échequier
+    Attributs :
+        Position : string
+            C'est une chaîne de caractère composé d'une lettre et d'un chiffre. Par exemple, B1, C5 ou E7.
+        Type : string
+            Une seule lettre : Q(Queen), B(Bishop), R(Rook), K(King), P(Pion), H(HorseMan)
+        Couleur : boolean
+            True blanc, False noir
+
+    """
+
+    def __init__(self, position, type, couleur):
+        self.Position = position
+        self.Type = type
+        self.Couleur = couleur 
+
+    #Setter & Getter Position
+
+    def GetPosition(self):
+        return self.Position
+
+    def SetPosition(self, new_position):
+        self.Position = new_position
+
+    #Setter & Getter Type
+    
+    def GetType(self):
+        return self.Type
+
+    def SetType(self, new_type):
+        self.Type = new_type
+
+    #Setter & Getter Couleur
+
+    def GetCouleur(self):
+        return self.Couleur
+
+    def SetCouleur(self, new_couleur):
+        self.Couleur = new_couleur
+
+    def __repr__(self):
+        return f"Piece : \n Position : {self.Position} \n Type : {self.Type} \n Couleur : {self.Couleur}"
+
+BP1 = Piece('C2', 'P', True)
+print(BP1)
