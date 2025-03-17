@@ -5,8 +5,30 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="style_connexion.css">
 </head>
 <body>
-    
+    <header>
+        <h1>Jeu d'echecs</h1>
+    </header>
+
+    <div id="start">
+        <form id="startGameForm">
+            <label for="username">Nom :</label>
+            <input type="text" id="playerName" name="playerName" required><br><br>
+        
+            <label for="password">Mot de passe :</label>
+            <input type="password" id="password" name="password" required><br><br>
+        
+            <button type="submit">Se connecter</button>
+            <p id="errorMessage" style="display: none;"></p> <!-- Message d'erreur -->
+        </form>
+        <p>Créer compte <a href="../Frontend/creer_compte.html">ici</a></p>
+    </div>
+
+    <footer>
+        <p>All rights reserved ©</p>
+    </footer>
 </body> 
+>>>>>>> 8e789cc (Réorganisation du projet)
 </html>
