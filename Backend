@@ -53,3 +53,10 @@ def generate() :
     return plateau
 
 print(generate())
+
+def Affichage_provisoire(echequier):
+    Console = ""
+    for y in range():
+        for x in range():
+            if echequier[y][x] != None:
+                Console = ""
