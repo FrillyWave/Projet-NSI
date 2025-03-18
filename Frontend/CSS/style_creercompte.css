@@ -10,6 +10,7 @@
     }
 }
 
+
 /* Reset CSS */
 * {
     margin: 0;
@@ -59,18 +60,22 @@ img{
     display: inline-block;
 }
 
+h2{
+    padding-top: 50px;
+}
+
 /* Conteneur principal du formulaire */
-#connexion-container {
+#sign_up-container {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    margin-top: 100px;
+    margin-top: 70px;
     width: 100%;
 }
 
 /* Style du formulaire */
-#connexion-form {
+#sign_up-form {
     text-align: center;
     padding: 40px 25px;
     background: #ffffff;
@@ -81,14 +86,14 @@ img{
 }
 
 /* Labels et champs de texte */
-#connexion-form label {
+#sign_up-form label {
     font-size: 1.1em;
     color: #333;
     display: block;
     margin: 10px 0 5px;
 }
 
-#connexion-form input {
+#sign_up-form input {
     width: 100%;
     padding: 12px;
     margin: 10px 0;
@@ -99,13 +104,13 @@ img{
     transition: border-color 0.3s ease;
 }
 
-#connexion-form input:focus {
+#sign_up-form input:focus {
     border-color: #2575fc;
     outline: none;
 }
 
 /* Style du bouton */
-#connexion-form button {
+#sign_up-form button {
     background-color: #2575fc;
     color: white;
     border: none;
@@ -120,20 +125,22 @@ img{
 }
 
 /* Effet au survol du bouton */
-#connexion-form button:hover {
+#sign_up-form button:hover {
     background-color: #6a11cb;
     transform: scale(1.05);
+    transition: 1s;
 }
 
 /* Liens */
-#connexion-form p a {
+#sign_up-form p a {
     color: #2575fc;
     text-decoration: none;
 }
 
-#connexion-form p a:hover {
+/*#sign_up-form p a:hover {
     text-decoration: underline;
 }
+*/
 
 /* Footer */
 footer {

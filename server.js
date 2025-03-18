@@ -1,70 +1,118 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 const fs = require('fs');
 const path = require('path');
+const cors = require('cors'); // Middleware CORS
+
 const app = express();
+const PORT = 3001;
 
-// Middleware pour parser les données envoyées en POST
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(cors());
+app.use(bodyParser.json());
 
-// Lire le fichier JSON contenant les utilisateurs
-function readUsersFromFile() {
-    return new Promise((resolve, reject) => {
-        const usersPath = path.join(__dirname, 'Data', 'users.json');
+// Endpoint pour ajouter un joueur
+app.post('/add-player', (req, res) => {
+    const newPlayer = req.body;
 
-        fs.readFile(usersPath, 'utf8', (err, data) => {
+    // Vérifie les données de base
+    if (!newPlayer.name || !newPlayer.password) {
+        return res.status(400).send('Erreur : Nom et mot de passe requis.');
+    }
+
+    const filePath = path.join(__dirname, 'Data', 'users.json');
+
+    fs.readFile(filePath, 'utf8', (err, data) => {
+        if (err) {
+            console.error('Erreur de lecture du fichier :', err);
+            return res.status(500).send('Erreur interne du serveur.');
+        }
+
+        const players = JSON.parse(data || '[]');
+
+        // Vérifie si le joueur existe déjà
+        if (players.some(player => player.name === newPlayer.name)) {
+            return res.status(400).send(`Erreur : Le joueur "${newPlayer.name}" existe déjà.`);
+        }
+
+        players.push(newPlayer);
+
+        fs.writeFile(filePath, JSON.stringify(players, null, 2), (err) => {
             if (err) {
-                reject("Erreur lors de la lecture du fichier JSON :" + err);
-                return;
+                console.error('Erreur d\'écriture du fichier :', err);
+                return res.status(500).send('Erreur interne du serveur.');
             }
 
-            try {
-                const users = JSON.parse(data);
-                resolve(users); // Résoudre la promesse avec les utilisateurs
-            } catch (e) {
-                reject('Erreur de parsing : ' + e);
-            }
+            res.send('Profil ajouté avec succès!');
         });
     });
-}
-
-// Récupérer la liste des utilisateurs
-app.get('/users', async (req, res) => {
-    try {
-        const users = await readUsersFromFile();
-        res.status(200).json(users); // Retourne les utilisateurs
-    } catch (error) {
-        res.status(500).json({ error: error });
-    }
 });
 
-// Connexion
-app.post('/login', async (req, res) => {
-    const { username, password } = req.body;
+// Endpoint pour supprimer un joueur
+app.post('/delete-player', (req, res) => {
+    const { name, password } = req.body;
 
-    try {
-        const users = await readUsersFromFile();
-
-        // Chercher l'utilisateur dans le fichier JSON
-        const user = users.find(u => u.username === username);
-
-        if (!user) {
-            console.log('user not found')
-            return res.status(404).json({ error: 'Utilisateur non trouvé' });
-        }
-
-        // Vérifier le mot de passe
-        if (user.password === password) {
-            return res.status(200).json({ message: 'Connexion réussie' });
-        } else {
-            return res.status(400).json({ error: 'Mot de passe incorrect' });
-        }
-    } catch (error) {
-        return res.status(500).json({ error: 'Erreur lors de la lecture des utilisateurs' });
+    if (!name || !password) {
+        return res.status(400).send({ success: false, message: 'Nom et mot de passe requis.' });
     }
+
+    const filePath = path.join(__dirname, 'data', 'players.json');
+
+    fs.readFile(filePath, 'utf8', (err, data) => {
+        if (err) {
+            console.error('Erreur de lecture du fichier :', err);
+            return res.status(500).send({ success: false, message: 'Erreur interne du serveur.' });
+        }
+
+        let players = JSON.parse(data || '[]');
+
+        const playerIndex = players.findIndex(player => player.name === name && player.password === password);
+
+        if (playerIndex === -1) {
+            return res.status(404).send({ success: false, message: 'Profil introuvable ou mot de passe incorrect.' });
+        }
+
+        players.splice(playerIndex, 1);
+
+        fs.writeFile(filePath, JSON.stringify(players, null, 2), (err) => {
+            if (err) {
+                console.error('Erreur d\'écriture du fichier :', err);
+                return res.status(500).send({ success: false, message: 'Erreur interne du serveur.' });
+            }
+
+            res.send({ success: true, message: 'Profil supprimé avec succès.' });
+        });
+    });
 });
 
-// Démarrer le serveur
-app.listen(3001, () => {
-    console.log('Server running on http://localhost:3001');
+app.post('/update-progress', (req, res) => {
+    const { name, currentPage } = req.body;
+
+    if (!name || !currentPage) {
+        return res.status(400).send('Nom et page actuelle requis');
+    }
+
+    const filePath = path.join(__dirname, 'player.json');
+
+    // Charger le fichier JSON
+    fs.readFile(filePath, 'utf8', (err, data) => {
+        if (err) return res.status(500).send('Erreur lecture fichier JSON');
+
+        const players = JSON.parse(data);
+
+        // Trouver et mettre à jour le joueur
+        const player = players.find(p => p.name === name);
+        if (!player) return res.status(404).send('Joueur non trouvé');
+
+        player.currentPage = currentPage;
+
+        // Sauvegarder le fichier mis à jour
+        fs.writeFile(filePath, JSON.stringify(players, null, 2), (err) => {
+            if (err) return res.status(500).send('Erreur écriture fichier JSON');
+            res.send('Progression mise à jour');
+        });
+    });
+});
+
+app.listen(PORT, () => {
+    console.log(`Serveur en cours d'exécution sur http://localhost:${PORT}`);
 });

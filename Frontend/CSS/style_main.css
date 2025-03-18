@@ -10,12 +10,6 @@
     }
 }
 
-/* Reset CSS */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
 
 body {
     font-family: 'Arial', sans-serif;
@@ -58,6 +52,8 @@ img{
     text-align: center;
     display: inline-block;
 }
+
+
 
 /* Conteneur principal du formulaire */
 #connexion-container {

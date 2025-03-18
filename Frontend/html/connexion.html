@@ -6,13 +6,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jeu d'échecs - Connexion</title>
     <link rel="stylesheet" href="../CSS/style_connexion.css">
+    <link rel="icon" type="image/x-icon" href="../Image/icon.webp">
 </head>
 <body>
     <header>
-        <h1>Jeu d'échecs</h1>
+        <div id="logo">
+            <img src="../Image/logo-plein.webp" alt="">
+        </div>
+        <div id="titre">
+            <h1>Jeu d'échecs</h1>
+        </div>
+        
+        
     </header>
-
+    <h2>Connexion</h2>
     <div id="connexion-container">
+        
         <form id="connexion-form" method="POST">
             <label for="username">Nom d'utilisateur :</label>
             <input type="text" id="username" name="username" placeholder="Entrez votre nom d'utilisateur" required><br><br>
@@ -22,7 +31,7 @@
         
             <button type="submit">Se connecter</button>
             <p id="errorMessage" style="display: none;"></p> <!-- Message d'erreur -->
-            <p>Vous n'avez pas de compte ? <a href="../Frontend/creer_compte.html">Créez-en un ici</a></p>
+            <p>Vous n'avez pas de compte ? <a href="creer_compte.html">Créez-en un ici</a></p>
         </form>
     </div>
     

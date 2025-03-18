@@ -1,12 +1,47 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Jeu d'échecs - Créer compte</title>
+    <link rel="stylesheet" href="../CSS/style_creercompte.css">
+    <link rel="icon" type="image/x-icon" href="../Image/icon.webp">
+
 </head>
 <body>
-    <p>tzqt</p>
+    <header>
+        <div id="logo">
+            <img src="../Image/logo-plein.webp" alt="">
+        </div>
+        <div id="titre">
+            <h1>Jeu d'échecs</h1>
+        </div>
+        
+    </header>
+
+    <h2>Créer un compte</h2>
+
+    <div id="sign_up-container">
+
+        <form method="post" id="sign_up-form">
+            <label for="username">Nom d'utilisateur :</label>
+            <input type="text" id="username" name="username" placeholder="Entrez votre nom d'utilisateur" required><br><br>
+
+            <label for="password">Mot de passe :</label>
+            <input type="password" id="password" name="password" placeholder="Entrez votre mot de passe" required><br><br>
+
+            <label for="valid-password">Confirmez le mot de passe</label>
+            <input type="password" name="valid-password" id="valid-password" placeholder="Entrez votre mot de passe" required><br><br>
+
+            <button type="submit">Créer un compte</button>
+            <p id="errorMessage" style="display: none;"></p>
+
+        </form>
+    </div>
+
+    <footer>
+        <p>All rights reserved ©</p>
+    </footer>
 </body>
 </html>
