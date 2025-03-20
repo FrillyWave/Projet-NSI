@@ -70,7 +70,7 @@ img{
 }
 
 /* Style du formulaire */
-#connexion-form {
+#connexion_form {
     text-align: center;
     padding: 40px 25px;
     background: #ffffff;
@@ -81,14 +81,14 @@ img{
 }
 
 /* Labels et champs de texte */
-#connexion-form label {
+#connexion_form label {
     font-size: 1.1em;
     color: #333;
     display: block;
     margin: 10px 0 5px;
 }
 
-#connexion-form input {
+#connexion_form input {
     width: 100%;
     padding: 12px;
     margin: 10px 0;
@@ -99,13 +99,13 @@ img{
     transition: border-color 0.3s ease;
 }
 
-#connexion-form input:focus {
+#connexion_form input:focus {
     border-color: #2575fc;
     outline: none;
 }
 
 /* Style du bouton */
-#connexion-form button {
+#connexion_form button {
     background-color: #2575fc;
     color: white;
     border: none;
@@ -120,18 +120,18 @@ img{
 }
 
 /* Effet au survol du bouton */
-#connexion-form button:hover {
+#connexion_form button:hover {
     background-color: #6a11cb;
     transform: scale(1.05);
 }
 
 /* Liens */
-#connexion-form p a {
+#connexion_form p a {
     color: #2575fc;
     text-decoration: none;
 }
 
-#connexion-form p a:hover {
+#connexion_form p a:hover {
     text-decoration: underline;
 }
 

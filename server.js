@@ -5,7 +5,7 @@ const path = require('path');
 const cors = require('cors'); // Middleware CORS
 
 const app = express();
-const PORT = 3001;
+const PORT = 3002;
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -19,7 +19,7 @@ app.post('/add-player', (req, res) => {
         return res.status(400).send('Erreur : Nom et mot de passe requis.');
     }
 
-    const filePath = path.join(__dirname, 'Data', 'users.json');
+    const filePath = path.join(__dirname, 'data', 'players.json');
 
     fs.readFile(filePath, 'utf8', (err, data) => {
         if (err) {
