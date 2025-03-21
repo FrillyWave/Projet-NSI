@@ -7,63 +7,40 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (connexion_form) {
         connexion_form.addEventListener('submit', function (event) {
-            event.preventDefault(); // Empêche le rechargement de la page lors de la soumission du formulaire
-
-            // Récupération des données du formulaire (nom et mot de passe)
-            const userName = document.getElementById('userName').value.trim();
+            event.preventDefault();
+    
+            const username = document.getElementById('username').value.trim();
             const password = document.getElementById('password').value.trim();
-
-            // Vérification si les champs sont remplis
-            if (!userName || !password) {
-                alert("Veuillez remplir tous les champs");
+    
+            if (!username || !password) {
+                alert("Veuillez remplir tous les champs.");
                 return;
             }
-
-            // Création de l'objet contenant les données du joueur
-            const userData = {
-                name: userName,
-                password: password,
-            };
-
-            console.log('Données du joueur avant envoi :', userData);
-
-            // Réinitialisation des messages d'erreur
-            errorMessage.style.display = 'none';
-            errorMessage.textContent = '';
-
-            // Envoi des données du joueur au serveur pour l'enregistrer
-            fetch('http://localhost:3000/add-user', {
+    
+            fetch('http://localhost:3002/login', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(userData) // Envoie des données en format JSON
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, password })
             })
-                .then(response => {
-                    if (!response.ok) {
-                        // Si la réponse n'est pas OK, récupérer le message d'erreur
-                        return response.text().then(errorText => { throw new Error(errorText); });
-                    }
-                    return response.text(); // Récupérer la réponse du serveur
-                })
-                .then(data => {
-                    console.log('Réponse du serveur :', data);
-                    localStorage.setItem('userProfile', JSON.stringify(userData)); // Sauvegarde locale des infos du joueur
-                    window.location.href = '../html/main.html'; // Redirection vers la page d'introduction du jeu
-                })
-                .catch(error => {
-                    console.error('Erreur lors de l\'envoi des données :', error);
-                    errorMessage.style.display = 'block';
-                    errorMessage.textContent = error.message;
-
-                    // Si le nom est déjà pris, vider les champs pour forcer le joueur à en choisir un autre
-                    if (error.message.includes("existe déjà")) {
-                        document.getElementById('userName').value = '';
-                        document.getElementById('password').value = '';
-                    }
-                });
+            .then(response => {
+                if (!response.ok) {
+                    return response.text().then(errorText => { throw new Error(errorText); });
+                }
+                return response.text();
+            })
+            .then(data => {
+                console.log('Réponse du serveur :', data);
+                localStorage.setItem('userProfile', JSON.stringify({ username }));
+                window.location.href = '../html/main.html';
+            })
+            .catch(error => {
+                console.error('Erreur lors de la connexion :', error);
+                errorMessage.style.display = 'block';
+                errorMessage.textContent = error.message;
+            });
         });
     }
+    
 
     /**
      * Sauvegarde de la progression du joueur
@@ -117,18 +94,17 @@ document.addEventListener('DOMContentLoaded', () => {
             const confirmDelete = confirm("Êtes-vous sûr de vouloir supprimer votre profil ?");
             if (confirmDelete) {
                 const name = prompt("Entrez votre nom :");
-                const password = prompt("Entrez votre mot de passe :");
 
-                if (!name || !password) {
-                    alert("Nom et mot de passe requis pour supprimer le profil.");
+                if (!name) {
+                    alert("Nom requis pour supprimer le profil.");
                     return;
                 }
 
                 // Envoi de la requête de suppression au serveur
-                fetch('http://localhost:3000/delete-user', {
+                fetch('http://localhost:3002/delete-user', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ name, password }) // Envoi des identifiants du joueur
+                    body: JSON.stringify({ name }) // Envoi des identifiants du joueur
                 })
                     .then(response => response.json())
                     .then(data => {
@@ -149,6 +125,65 @@ document.addEventListener('DOMContentLoaded', () => {
         console.warn("Bouton 'Supprimer le profil' introuvable sur cette page.");
     }
 });
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    const signUpForm = document.getElementById('sign_up-form');
+    const errorMessage = document.getElementById('errorMessage'); // Conteneur pour afficher les erreurs
+
+    if (signUpForm) {
+        signUpForm.addEventListener('submit', async function (event) {
+            event.preventDefault(); // Empêche le rechargement de la page
+    
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
+            const validPassword = document.getElementById('valid-password').value.trim();
+    
+            if (!username || !password || !validPassword) {
+                alert("Veuillez remplir tous les champs.");
+                return;
+            }
+
+            if (password !== validPassword) {
+                alert("Les mots de passe ne correspondent pas.");
+                return;
+            }
+
+            console.log("Envoi des données au serveur...");
+
+            try {
+                const response = await fetch('http://localhost:3002/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+
+                console.log("Réponse reçue du serveur :", response);
+
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    throw new Error(errorText);
+                }
+
+                const data = await response.json();
+                console.log("Inscription réussie :", data);
+
+                // Stocker l'utilisateur en localStorage pour qu'il reste connecté
+                localStorage.setItem('userProfile', JSON.stringify({ username }));
+
+                // Redirection vers la page principale
+                console.log("Redirection vers main.html...");
+                window.location.href = '../html/main.html';
+
+            } catch (error) {
+                console.error('Erreur lors de l’inscription :', error);
+                errorMessage.style.display = 'block';
+                errorMessage.textContent = error.message;
+            }
+        });
+    }
+});
+
 
 
 
