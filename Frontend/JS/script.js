@@ -40,28 +40,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     }
-    
-
-    /**
-     * Sauvegarde de la progression du joueur
-     */
-    const currentPage = window.location.pathname.split('/').pop(); // Récupère la page actuelle (ex. "debut.html")
-    const userProfile = JSON.parse(localStorage.getItem('userProfile'));
-
-    if (userProfile) {
-        userProfile.currentPage = currentPage; // Met à jour la progression dans le stockage local
-        localStorage.setItem('userProfile', JSON.stringify(userProfile));
-
-        // Envoi de la progression mise à jour au serveur
-        fetch('http://localhost:3000/update-progress', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                name: userProfile.name,
-                currentPage: currentPage
-            })
-        }).catch(error => console.error('Erreur mise à jour progression :', error));
-    }
 
     /**
      * Gestion du bouton "Reprendre la partie"
@@ -104,14 +82,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 fetch('http://localhost:3002/delete-user', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ name }) // Envoi des identifiants du joueur
+                    body: JSON.stringify({ username: name }) // Envoi des identifiants du joueur
                 })
                     .then(response => response.json())
                     .then(data => {
                         if (data.success) {
                             alert("Votre profil a été supprimé avec succès !");
                             localStorage.removeItem('userProfile'); // Supprime le profil en local
-                            window.location.href = '../html/index.html'; // Redirige vers l'accueil
+                            window.location.href = '../html/connexion.html'; // Redirige vers l'accueil
                         } else {
                             alert(data.message || "Erreur lors de la suppression du profil.");
                         }
