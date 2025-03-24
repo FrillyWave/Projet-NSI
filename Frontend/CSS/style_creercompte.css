@@ -44,6 +44,68 @@ header {
     animation: slideIn 1s ease-out; /* Animation d'apparition */
 }
 
+
+/* Styling du conteneur nav */
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+}
+
+/* Style des éléments de liste */
+nav ul li {
+    margin-right: 30px;
+}
+
+nav ul li:last-child {
+    margin-right: 0;
+}
+
+/* Liens dans la navigation */
+nav ul li a {
+    text-decoration: none;
+    color: white; /* Couleur blanche pour les liens */
+    font-size: 18px;
+    font-weight: bold;
+    text-transform: uppercase; /* Capitalisation du texte */
+    padding: 10px 15px;
+    transition: all 0.3s ease; /* Transition douce pour les animations */
+    border-radius: 5px;
+    position: relative;
+}
+
+/* Effet au survol des liens */
+nav ul li a::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: white;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s ease;
+}
+
+/* Lien en hover avec un effet */
+nav ul li a:hover::before {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+nav ul li a:hover {
+    background-color: rgba(255, 255, 255, 0.2); /* Effet de survol en transparence */
+    color: #ffeb3b; /* Changement de couleur au hover */
+}
+
+/* Liens actifs */
+nav ul li a:active {
+    color: #f39c12;
+}
+
 img{
     height: 50px;
 }

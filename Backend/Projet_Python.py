@@ -1,3 +1,5 @@
+
+import copy
 #Class pièce 
 
 def coordonnees_to_case(liste):
@@ -86,6 +88,16 @@ class Piece:
         #Rook
         if piece_type == "R":
             liste_mouvements = self.Mouvement_Possible_Rook(Echequier)
+        #Bishoop
+        if piece_type == "B":
+            liste_mouvements = self.Mouvement_Possible_Bishoop(Echequier)
+        #Queen
+        if piece_type == "Q":
+            liste_mouvements = self.Mouvement_Possible_Queen(Echequier)
+        #Horseman
+        if piece_type == "H":
+            liste_mouvements = self.Mouvement_Possible_Horseman(Echequier)
+
 
         return coordonnees_to_case(liste_mouvements)
 
@@ -277,74 +289,484 @@ class Piece:
         return liste_mouvements
 
     def Mouvement_Possible_Rook(self, Echequier):
-            echequier = Echequier.GetContenue()  
-            liste_mouvements = []
-            piece_position = self.Translate_coordonnees()
-            piece_color = self.GetCouleur()
+        echequier = Echequier.GetContenue()  
+        liste_mouvements = []
+        piece_position = self.Translate_coordonnees()
+        piece_color = self.GetCouleur()
 
-            # Blanc
-            if piece_color:
-                for i in range(4):
-                    Path = True
-                    chain = 1
-                    if i == 0:
-                        x = 0
-                        y = 1
-                    elif i == 1:
-                        x = 0
-                        y = -1
-                    elif i == 2:
-                        x = 1
-                        y = 0
-                    else:
-                        x = -1
-                        y = 0
-                    while Path:
-                        if (piece_position[1] + (y * chain) <= 7 and piece_position[1] + (y * chain) >= 0) and (piece_position[0] + (x * chain) <= 7 and piece_position[0] + (x * chain) >= 0):
-                            if echequier[piece_position[1] + (y * chain)][piece_position[0] + (x * chain)] == None:
+        # Blanc
+        if piece_color:
+            for i in range(4):
+                Path = True
+                chain = 1
+                if i == 0:
+                    x = 0
+                    y = 1
+                elif i == 1:
+                    x = 0
+                    y = -1
+                elif i == 2:
+                    x = 1
+                    y = 0
+                else:
+                    x = -1
+                    y = 0
+                while Path:
+                    if (piece_position[1] + (y * chain) <= 7 and piece_position[1] + (y * chain) >= 0) and (piece_position[0] + (x * chain) <= 7 and piece_position[0] + (x * chain) >= 0):
+                        if echequier[piece_position[1] + (y * chain)][piece_position[0] + (x * chain)] == None:
+                            if self.Movement_verif_echec((piece_position[0] + (x * chain), piece_position[1] + (y * chain)), Echequier):
                                 liste_mouvements.append((piece_position[0] + (x * chain), piece_position[1] + (y * chain)))
-                            else:
-                                if not(echequier[piece_position[1] + (y * chain)][piece_position[0] + (x * chain)].GetCouleur()):
+                        else:
+                            if not(echequier[piece_position[1] + (y * chain)][piece_position[0] + (x * chain)].GetCouleur()):
+                                if self.Movement_verif_echec((piece_position[0] + (x * chain), piece_position[1] + (y * chain)), Echequier):
                                     liste_mouvements.append((piece_position[0] + (x * chain), piece_position[1] + (y * chain)))
                                     Path = False 
-                                else:
-                                    Path = False
-                        else:
-                            Path = False
-                        chain = chain + 1
+                            else:
+                                Path = False
+                    else:
+                        Path = False
+                    chain = chain + 1
 
-            # Noir
+        # Noir
+        else:
+            for i in range(4):
+                Path = True
+                chain = 1
+                if i == 0:
+                    x = 0
+                    y = 1
+                elif i == 1:
+                    x = 0
+                    y = -1
+                elif i == 2:
+                    x = 1
+                    y = 0
+                else:
+                    x = -1
+                    y = 0
+                while Path:
+                    if (piece_position[1] + (y * chain) <= 7 and piece_position[1] + (y * chain) >= 0) and (piece_position[0] + (x * chain) <= 7 and piece_position[0] + (x * chain) >= 0):
+                        if echequier[piece_position[1] + (y * chain)][piece_position[0] + (x * chain)] == None:
+                            if self.Movement_verif_echec((piece_position[0] + (x * chain), piece_position[1] + (y * chain)), Echequier):
+                                liste_mouvements.append((piece_position[0] + (x * chain), piece_position[1] + (y * chain)))
+                        else:
+                            if echequier[piece_position[1] + (y * chain)][piece_position[0] + (x * chain)].GetCouleur():
+                                if self.Movement_verif_echec((piece_position[0] + (x * chain), piece_position[1] + (y * chain)), Echequier):
+                                    liste_mouvements.append((piece_position[0] + (x * chain), piece_position[1] + (y * chain)))
+                                    Path = False 
+                            else:
+                                Path = False
+                    else:
+                        Path = False
+                    chain = chain + 1
+
+        return liste_mouvements
+
+    def Mouvement_Possible_Bishoop(self, Echequier):
+        echequier = Echequier.GetContenue()  
+        liste_mouvements = []
+        piece_position = self.Translate_coordonnees()
+        piece_color = self.GetCouleur()
+
+        # Blanc
+        if piece_color:
+            for i in range(4):
+                Path = True
+                chain = 1
+                if i == 0:
+                    x = 1
+                    y = 1
+                elif i == 1:
+                    x = 1
+                    y = -1
+                elif i == 2:
+                    x = -1
+                    y = -1
+                else:
+                    x = -1
+                    y = 1
+                while Path:
+                    if (piece_position[1] + (y * chain) <= 7 and piece_position[1] + (y * chain) >= 0) and (piece_position[0] + (x * chain) <= 7 and piece_position[0] + (x * chain) >= 0):
+                        if echequier[piece_position[1] + (y * chain)][piece_position[0] + (x * chain)] == None:
+                            liste_mouvements.append((piece_position[0] + (x * chain), piece_position[1] + (y * chain)))
+                        else:
+                            if not(echequier[piece_position[1] + (y * chain)][piece_position[0] + (x * chain)].GetCouleur()):
+                                liste_mouvements.append((piece_position[0] + (x * chain), piece_position[1] + (y * chain)))
+                                Path = False 
+                            else:
+                                Path = False
+                    else:
+                        Path = False
+                    chain = chain + 1
+
+        # Noir
+        else:
+            for i in range(4):
+                Path = True
+                chain = 1
+                if i == 0:
+                    x = 1
+                    y = 1
+                elif i == 1:
+                    x = 1
+                    y = -1
+                elif i == 2:
+                    x = -1
+                    y = -1
+                else:
+                    x = -1
+                    y = 1
+                while Path:
+                    if (piece_position[1] + (y * chain) <= 7 and piece_position[1] + (y * chain) >= 0) and (piece_position[0] + (x * chain) <= 7 and piece_position[0] + (x * chain) >= 0):
+                        if echequier[piece_position[1] + (y * chain)][piece_position[0] + (x * chain)] == None:
+                            liste_mouvements.append((piece_position[0] + (x * chain), piece_position[1] + (y * chain)))
+                        else:
+                            if echequier[piece_position[1] + (y * chain)][piece_position[0] + (x * chain)].GetCouleur():
+                                liste_mouvements.append((piece_position[0] + (x * chain), piece_position[1] + (y * chain)))
+                                Path = False 
+                            else:
+                                Path = False
+                    else:
+                        Path = False
+                    chain = chain + 1
+
+        return liste_mouvements
+
+    def Mouvement_Possible_Queen(self, Echequier):
+        echequier = Echequier.GetContenue()  
+        liste_mouvements = []
+        piece_position = self.Translate_coordonnees()
+        piece_color = self.GetCouleur()
+
+        # Blanc
+        if piece_color:
+            #Bishoop
+            for i in range(4):
+                Path = True
+                chain = 1
+                if i == 0:
+                    x = 1
+                    y = 1
+                elif i == 1:
+                    x = 1
+                    y = -1
+                elif i == 2:
+                    x = -1
+                    y = -1
+                else:
+                    x = -1
+                    y = 1
+                while Path:
+                    if (piece_position[1] + (y * chain) <= 7 and piece_position[1] + (y * chain) >= 0) and (piece_position[0] + (x * chain) <= 7 and piece_position[0] + (x * chain) >= 0):
+                        if echequier[piece_position[1] + (y * chain)][piece_position[0] + (x * chain)] == None:
+                            liste_mouvements.append((piece_position[0] + (x * chain), piece_position[1] + (y * chain)))
+                        else:
+                            if not(echequier[piece_position[1] + (y * chain)][piece_position[0] + (x * chain)].GetCouleur()):
+                                liste_mouvements.append((piece_position[0] + (x * chain), piece_position[1] + (y * chain)))
+                                Path = False 
+                            else:
+                                Path = False
+                    else:
+                        Path = False
+                    chain = chain + 1
+            #rook        
+            for i in range(4):
+                Path = True
+                chain = 1
+                if i == 0:
+                    x = 0
+                    y = 1
+                elif i == 1:
+                    x = 0
+                    y = -1
+                elif i == 2:
+                    x = 1
+                    y = 0
+                else:
+                    x = -1
+                    y = 0
+                while Path:
+                    if (piece_position[1] + (y * chain) <= 7 and piece_position[1] + (y * chain) >= 0) and (piece_position[0] + (x * chain) <= 7 and piece_position[0] + (x * chain) >= 0):
+                        if echequier[piece_position[1] + (y * chain)][piece_position[0] + (x * chain)] == None:
+                            liste_mouvements.append((piece_position[0] + (x * chain), piece_position[1] + (y * chain)))
+                        else:
+                            if not(echequier[piece_position[1] + (y * chain)][piece_position[0] + (x * chain)].GetCouleur()):
+                                liste_mouvements.append((piece_position[0] + (x * chain), piece_position[1] + (y * chain)))
+                                Path = False 
+                            else:
+                                Path = False
+                    else:
+                        Path = False
+                    chain = chain + 1
+
+        # Noir
+        else:
+            #Bishoop
+            for i in range(4):
+                Path = True
+                chain = 1
+                if i == 0:
+                    x = 1
+                    y = 1
+                elif i == 1:
+                    x = 1
+                    y = -1
+                elif i == 2:
+                    x = -1
+                    y = -1
+                else:
+                    x = -1
+                    y = 1
+                while Path:
+                    if (piece_position[1] + (y * chain) <= 7 and piece_position[1] + (y * chain) >= 0) and (piece_position[0] + (x * chain) <= 7 and piece_position[0] + (x * chain) >= 0):
+                        if echequier[piece_position[1] + (y * chain)][piece_position[0] + (x * chain)] == None:
+                            liste_mouvements.append((piece_position[0] + (x * chain), piece_position[1] + (y * chain)))
+                        else:
+                            if echequier[piece_position[1] + (y * chain)][piece_position[0] + (x * chain)].GetCouleur():
+                                liste_mouvements.append((piece_position[0] + (x * chain), piece_position[1] + (y * chain)))
+                                Path = False 
+                            else:
+                                Path = False
+                    else:
+                        Path = False
+                    chain = chain + 1
+            
+            #rook
+            for i in range(4):
+                Path = True
+                chain = 1
+                if i == 0:
+                    x = 0
+                    y = 1
+                elif i == 1:
+                    x = 0
+                    y = -1
+                elif i == 2:
+                    x = 1
+                    y = 0
+                else:
+                    x = -1
+                    y = 0
+                while Path:
+                    if (piece_position[1] + (y * chain) <= 7 and piece_position[1] + (y * chain) >= 0) and (piece_position[0] + (x * chain) <= 7 and piece_position[0] + (x * chain) >= 0):
+                        if echequier[piece_position[1] + (y * chain)][piece_position[0] + (x * chain)] == None:
+                            liste_mouvements.append((piece_position[0] + (x * chain), piece_position[1] + (y * chain)))
+                        else:
+                            if echequier[piece_position[1] + (y * chain)][piece_position[0] + (x * chain)].GetCouleur():
+                                liste_mouvements.append((piece_position[0] + (x * chain), piece_position[1] + (y * chain)))
+                                Path = False 
+                            else:
+                                Path = False
+                    else:
+                        Path = False
+                    chain = chain + 1
+
+        return liste_mouvements
+    
+    def Mouvement_Possible_Horseman(self, Echequier):
+        echequier = Echequier.GetContenue()  
+        liste_mouvements = []
+        piece_position = self.Translate_coordonnees()
+        piece_color = self.GetCouleur()
+
+        # Blanc
+        if piece_color:
+            # Haut
+            if piece_position[1] - 2 >= 0 :
+                # Droite
+                if piece_position[0] + 1 <= 7 :
+                    if echequier[piece_position[1] - 2][piece_position[0] + 1] == None:
+                        liste_mouvements.append((piece_position[0] + 1, piece_position[1] - 2))
+                    else:
+                        if not(echequier[piece_position[1] - 2][piece_position[0] + 1].GetCouleur()):
+                            liste_mouvements.append((piece_position[0] + 1, piece_position[1] - 2))
+                
+                # Gauche
+                if piece_position[0] - 1 >= 0 :
+                    if echequier[piece_position[1] - 2][piece_position[0] - 1] == None:
+                        liste_mouvements.append((piece_position[0] - 1, piece_position[1] - 2))
+                    else:
+                        if not(echequier[piece_position[1] - 2][piece_position[0] - 1].GetCouleur()):
+                            liste_mouvements.append((piece_position[0] - 1, piece_position[1] - 2))
+
+            # Bas
+            if piece_position[1] + 2 <= 7 :
+                # Droite
+                if piece_position[0] + 1 <= 7 :
+                    if echequier[piece_position[1] + 2][piece_position[0] + 1] == None:
+                        liste_mouvements.append((piece_position[0] + 1, piece_position[1] + 2))
+                    else:
+                        if not(echequier[piece_position[1] + 2][piece_position[0] + 1].GetCouleur()):
+                            liste_mouvements.append((piece_position[0] + 1, piece_position[1] + 2))
+                
+                # Gauche
+                if piece_position[0] - 1 >= 0 :
+                    if echequier[piece_position[1] + 2][piece_position[0] - 1] == None:
+                        liste_mouvements.append((piece_position[0] - 1, piece_position[1] + 2))
+                    else:
+                        if not(echequier[piece_position[1] + 2][piece_position[0] - 1].GetCouleur()):
+                            liste_mouvements.append((piece_position[0] - 1, piece_position[1] + 2))
+
+            # Gauche
+            if piece_position[0] - 2 >= 0 :
+                # bas
+                if piece_position[1] + 1 <= 7 :
+                    if echequier[piece_position[1] + 1][piece_position[0] - 2] == None:
+                        liste_mouvements.append((piece_position[0] - 2, piece_position[1] + 1))
+                    else:
+                        if not(echequier[piece_position[1] + 1][piece_position[0] - 2].GetCouleur()):
+                            liste_mouvements.append((piece_position[0] - 2, piece_position[1] + 1))
+                
+                # haut
+                if piece_position[1] - 1 >= 0 :
+                    if echequier[piece_position[1] - 1][piece_position[0] - 2] == None:
+                        liste_mouvements.append((piece_position[0] - 2, piece_position[1] - 1))
+                    else:
+                        if not(echequier[piece_position[1] - 1][piece_position[0] - 2].GetCouleur()):
+                            liste_mouvements.append((piece_position[0] - 2, piece_position[1] - 1))
+
+            # Droite
+            if piece_position[0] + 2 <= 7 :
+                # bas
+                if piece_position[1] + 1 <= 7 :
+                    if echequier[piece_position[1] + 1][piece_position[0] + 2] == None:
+                        liste_mouvements.append((piece_position[0] + 2, piece_position[1] + 1))
+                    else:
+                        if not(echequier[piece_position[1] + 1][piece_position[0] + 2].GetCouleur()):
+                            liste_mouvements.append((piece_position[0] + 2, piece_position[1] + 1))
+                
+                # haut
+                if piece_position[1] - 1 >= 0 :
+                    if echequier[piece_position[1] - 1][piece_position[0] + 2] == None:
+                        liste_mouvements.append((piece_position[0] + 2, piece_position[1] - 1))
+                    else:
+                        if not(echequier[piece_position[1] - 1][piece_position[0] + 2].GetCouleur()):
+                            liste_mouvements.append((piece_position[0] + 2, piece_position[1] - 1))
+                    
+        # Noir
+        else:
+            # Haut
+            if piece_position[1] - 2 >= 0 :
+                # Droite
+                if piece_position[0] + 1 <= 7 :
+                    if echequier[piece_position[1] - 2][piece_position[0] + 1] == None:
+                        liste_mouvements.append((piece_position[0] + 1, piece_position[1] - 2))
+                    else:
+                        if echequier[piece_position[1] - 2][piece_position[0] + 1].GetCouleur():
+                            liste_mouvements.append((piece_position[0] + 1, piece_position[1] - 2))
+                
+                # Gauche
+                if piece_position[0] - 1 >= 0 :
+                    if echequier[piece_position[1] - 2][piece_position[0] - 1] == None:
+                        liste_mouvements.append((piece_position[0] - 1, piece_position[1] - 2))
+                    else:
+                        if echequier[piece_position[1] - 2][piece_position[0] - 1].GetCouleur():
+                            liste_mouvements.append((piece_position[0] - 1, piece_position[1] - 2))
+
+            # Bas
+            if piece_position[1] + 2 <= 7 :
+                # Droite
+                if piece_position[0] + 1 <= 7 :
+                    if echequier[piece_position[1] + 2][piece_position[0] + 1] == None:
+                        liste_mouvements.append((piece_position[0] + 1, piece_position[1] + 2))
+                    else:
+                        if echequier[piece_position[1] + 2][piece_position[0] + 1].GetCouleur():
+                            liste_mouvements.append((piece_position[0] + 1, piece_position[1] + 2))
+                
+                # Gauche
+                if piece_position[0] - 1 >= 0 :
+                    if echequier[piece_position[1] + 2][piece_position[0] - 1] == None:
+                        liste_mouvements.append((piece_position[0] - 1, piece_position[1] + 2))
+                    else:
+                        if echequier[piece_position[1] + 2][piece_position[0] - 1].GetCouleur():
+                            liste_mouvements.append((piece_position[0] - 1, piece_position[1] + 2))
+
+            # gauche
+            if piece_position[0] - 2 >= 0 :
+                # bas
+                if piece_position[1] + 1 <= 7 :
+                    if echequier[piece_position[1] + 1][piece_position[0] - 2] == None:
+                        liste_mouvements.append((piece_position[0] - 2, piece_position[1] + 1))
+                    else:
+                        if echequier[piece_position[1] + 1][piece_position[0] - 2].GetCouleur():
+                            liste_mouvements.append((piece_position[0] - 2, piece_position[1] + 1))
+                
+                # haut
+                if piece_position[1] - 1 >= 0 :
+                    if echequier[piece_position[1] - 1][piece_position[0] - 2] == None:
+                        liste_mouvements.append((piece_position[0] - 2, piece_position[1] - 1))
+                    else:
+                        if echequier[piece_position[1] - 1][piece_position[0] - 2].GetCouleur():
+                            liste_mouvements.append((piece_position[0] - 2, piece_position[1] - 1 ))
+
+            # droite
+            if piece_position[0] + 2 <= 7 :
+                # bas
+                if piece_position[1] + 1 <= 7 :
+                    if echequier[piece_position[1] + 1][piece_position[0] + 2] == None:
+                        liste_mouvements.append((piece_position[0] + 2, piece_position[1] + 1))
+                    else:
+                        if echequier[piece_position[1] + 1][piece_position[0] + 2].GetCouleur():
+                            liste_mouvements.append((piece_position[0] + 2, piece_position[1] + 1))
+                
+                # haut
+                if piece_position[1] - 1 >= 0 :
+                    if echequier[piece_position[1] - 1][piece_position[0] + 2] == None:
+                        liste_mouvements.append((piece_position[0] + 2, piece_position[1] - 1))
+                    else:
+                        if echequier[piece_position[1] - 1][piece_position[0] + 2].GetCouleur():
+                            liste_mouvements.append((piece_position[0] + 2, piece_position[1] - 1))
+
+        return liste_mouvements
+
+    def Move(self, coordonnees, Echequier):
+        echequier = Echequier.GetContenue()
+        Liste_mouvement_possible = self.Mouvement_Possible(Echequier)
+        if coordonnees in Liste_mouvement_possible:
+            echequier[self.Translate_coordonnees()[1]][self.Translate_coordonnees()[0]] = None
+            self.SetPosition(coordonnees)
+            Echequier.Ajouter_Piece(self)
+        else:
+            return "Non"
+
+    def Movement_verif_echec(self, coordonnees, Echequier):
+        echequier = Echequier.GetContenue()
+        Back_up_case = echequier[coordonnees[1]][coordonnees[0]]
+        print(Back_up_case)
+        Back_up_piece_coordonnees = self.GetPosition()
+        print(Back_up_piece_coordonnees)
+        print(coordonnees)
+
+        #Blanc
+        if self.GetCouleur():
+            echequier[coordonnees[1]][coordonnees[0]] = None
+            self.SetPosition(coordonnees_to_case([coordonnees])[0])
+            Echequier.Ajouter_Piece(self)
+            if Echequier.Echec_blanc():
+                return True
             else:
-                for i in range(4):
-                    Path = True
-                    chain = 1
-                    if i == 0:
-                        x = 0
-                        y = 1
-                    elif i == 1:
-                        x = 0
-                        y = -1
-                    elif i == 2:
-                        x = 1
-                        y = 0
-                    else:
-                        x = -1
-                        y = 0
-                    while Path:
-                        if (piece_position[1] + (y * chain) <= 7 and piece_position[1] + (y * chain) >= 0) and (piece_position[0] + (x * chain) <= 7 and piece_position[0] + (x * chain) >= 0):
-                            if echequier[piece_position[1] + (y * chain)][piece_position[0] + (x * chain)] == None:
-                                liste_mouvements.append((piece_position[0] + (x * chain), piece_position[1] + (y * chain)))
-                            else:
-                                if echequier[piece_position[1] + (y * chain)][piece_position[0] + (x * chain)].GetCouleur():
-                                    liste_mouvements.append((piece_position[0] + (x * chain), piece_position[1] + (y * chain)))
-                                    Path = False 
-                                else:
-                                    Path = False
-                        else:
-                            Path = False
-                        chain = chain + 1
+                self.SetPosition(Back_up_piece_coordonnees)
+                echequier[coordonnees[1]][coordonnees[0]] = Back_up_case
+                Echequier.Ajouter_Piece(self)
+                return False
 
-            return liste_mouvements
+        #noir
+        else:
+            echequier[coordonnees[1]][coordonnees[0]] = None
+            self.SetPosition(coordonnees_to_case([coordonnees])[0])
+            Echequier.Ajouter_Piece(self)
+            if Echequier.Echec_noir():
+                return True
+            else:
+                self.SetPosition(Back_up_piece_coordonnees)
+                echequier[coordonnees[1]][coordonnees[0]] = Back_up_case
+                Echequier.Ajouter_Piece(self)
+                return False
+
+    #==================================================
+    #
+    #==================================================
+                
 
 
     def __repr__(self):
@@ -391,6 +813,47 @@ class Echequier:
         echequier[y][x] = piece
         self.Contenue = echequier
 
+    def All_move(self):
+        echequier = self.GetContenue()
+        liste_mouvements_blanc = []
+        liste_mouvements_noir = []
+        liste_mouvements_piece = []
+        for i in range(8):
+            for j in range(8):
+                if echequier[i][j] != None:
+                    piece = echequier[i][j]
+                    liste_mouvements_piece = piece.Mouvement_Possible(self)
+                    if piece.GetCouleur():
+                        for u in range(len(liste_mouvements_piece)):
+                            liste_mouvements_blanc.append(liste_mouvements_piece[u])
+                    else:
+                        for u in range(len(liste_mouvements_piece)):
+                            liste_mouvements_noir.append(liste_mouvements_piece[u])
+
+        return (liste_mouvements_blanc, liste_mouvements_noir)
+
+    def Echec_blanc(self):
+        echequier = self.GetContenue()
+        #trouver le roi
+        case_king = K1.GetPosition()
+        #verif que le roi est safe
+        All_move = self.All_move()[1]
+        for i in range(len(All_move)):
+            if All_move[i] == case_king:
+                return True
+        return False
+
+    def Echec_noir(self):
+        echequier = self.GetContenue()
+        #trouver le roi
+        case_king = k1.GetPosition()
+        #verif que le roi est safe
+        All_move = self.All_move()[0]
+        for i in range(len(All_move)):
+            if All_move[i] == case_king:
+                return True
+        return False
+
     def __repr__(self):
         return f"Echequier : {self.Contenue}"
 
@@ -400,25 +863,50 @@ class Echequier:
 
 Zone_test = Echequier()
 
-BP1 = Piece("BP1", "C2", "P", True)
-BP2 = Piece("BP2", "D2", "P", True)
-NP1 = Piece("NP1", "D3", "P", False)
-BR1 = Piece("BR1", "C3", "R", True)
+
+P1 = Piece(" P1", "C2", "P", True)
+P2 = Piece(" P2", "D2", "P", True)
+p1 = Piece(" p1", "D3", "P", False)
+R1 = Piece(" R1", "F3", "R", True)
+b1 = Piece(" b1", "E4", "B", False)
+Q1 = Piece(" Q1", "C4", "Q", True)
+h1 = Piece(" h1", "D6", "H", False)
+K1 = Piece(" K1", "A3", "K", True)
+k1 = Piece(" k1", "C8", "K", False)
+r1 = Piece(" r1", "C6", "R", False)
 
 
-Zone_test.Ajouter_Piece(BP1)
-Zone_test.Ajouter_Piece(BP2)
-Zone_test.Ajouter_Piece(NP1)
-Zone_test.Ajouter_Piece(BR1)
-
+Zone_test.Ajouter_Piece(P1)
+Zone_test.Ajouter_Piece(P2)
+Zone_test.Ajouter_Piece(p1)
+Zone_test.Ajouter_Piece(R1)
+Zone_test.Ajouter_Piece(b1)
+Zone_test.Ajouter_Piece(Q1)
+Zone_test.Ajouter_Piece(h1)
+Zone_test.Ajouter_Piece(K1)
+Zone_test.Ajouter_Piece(k1)
+Zone_test.Ajouter_Piece(r1)
 
 print(Zone_test.Affichage_provisoire())
 
-print("BP1 : ", BP1.Mouvement_Possible(Zone_test))
-print("BP2 : ", BP2.Mouvement_Possible(Zone_test))
-print("NP1 : ", NP1.Mouvement_Possible(Zone_test))
-print("BR1 : ", BR1.Mouvement_Possible(Zone_test))
+#print("P1 : ", P1.Mouvement_Possible(Zone_test))
+#print("P2 : ", P2.Mouvement_Possible(Zone_test))
+#print("p1 : ", p1.Mouvement_Possible(Zone_test))
+#print("R1 : ", R1.Mouvement_Possible(Zone_test))
+#print("b1 : ", b1.Mouvement_Possible(Zone_test))
+#print("Q1 : ", Q1.Mouvement_Possible(Zone_test))
+#print("h1 : ", h1.Mouvement_Possible(Zone_test))
+#print("K1 : ", K1.Mouvement_Possible(Zone_test))
+print("r1 : ", r1.Mouvement_Possible(Zone_test))
 
+#print("All Move : ", Zone_test.All_move())
+
+#print("Blanc en échec ? : ", Zone_test.Echec_blanc())
+#print("Noir en échec ? : ", Zone_test.Echec_noir())
+
+#P1.Move("D3", Zone_test)
+
+#print(Zone_test.Affichage_provisoire())
 #=============================================================================
 #
 #=============================================================================

@@ -1,6 +1,10 @@
 [
   {
-    "username": "testUser",
-    "password": "testPassword"
+    "username": "joan",
+    "password": "$2b$10$ChZ8k5xcnQtkX5hKZk.NX.tZWnsnuu4MboDgZjEwMY/tGfe6EGzvS"
+  },
+  {
+    "username": "toto",
+    "password": "$2b$10$t6190uzb0dmpZSnfI786MeugaiyJpuJ/X3Uo0PDFEVOBEJcv2YH.W"
   }
 ]
