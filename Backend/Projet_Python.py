@@ -1,4 +1,3 @@
-
 import copy
 #Class pièce 
 
@@ -314,13 +313,11 @@ class Piece:
                 while Path:
                     if (piece_position[1] + (y * chain) <= 7 and piece_position[1] + (y * chain) >= 0) and (piece_position[0] + (x * chain) <= 7 and piece_position[0] + (x * chain) >= 0):
                         if echequier[piece_position[1] + (y * chain)][piece_position[0] + (x * chain)] == None:
-                            if self.Movement_verif_echec((piece_position[0] + (x * chain), piece_position[1] + (y * chain)), Echequier):
-                                liste_mouvements.append((piece_position[0] + (x * chain), piece_position[1] + (y * chain)))
+                            liste_mouvements.append((piece_position[0] + (x * chain), piece_position[1] + (y * chain)))
                         else:
                             if not(echequier[piece_position[1] + (y * chain)][piece_position[0] + (x * chain)].GetCouleur()):
-                                if self.Movement_verif_echec((piece_position[0] + (x * chain), piece_position[1] + (y * chain)), Echequier):
-                                    liste_mouvements.append((piece_position[0] + (x * chain), piece_position[1] + (y * chain)))
-                                    Path = False 
+                                liste_mouvements.append((piece_position[0] + (x * chain), piece_position[1] + (y * chain)))
+                                Path = False 
                             else:
                                 Path = False
                     else:
@@ -347,13 +344,11 @@ class Piece:
                 while Path:
                     if (piece_position[1] + (y * chain) <= 7 and piece_position[1] + (y * chain) >= 0) and (piece_position[0] + (x * chain) <= 7 and piece_position[0] + (x * chain) >= 0):
                         if echequier[piece_position[1] + (y * chain)][piece_position[0] + (x * chain)] == None:
-                            if self.Movement_verif_echec((piece_position[0] + (x * chain), piece_position[1] + (y * chain)), Echequier):
-                                liste_mouvements.append((piece_position[0] + (x * chain), piece_position[1] + (y * chain)))
+                            liste_mouvements.append((piece_position[0] + (x * chain), piece_position[1] + (y * chain)))
                         else:
                             if echequier[piece_position[1] + (y * chain)][piece_position[0] + (x * chain)].GetCouleur():
-                                if self.Movement_verif_echec((piece_position[0] + (x * chain), piece_position[1] + (y * chain)), Echequier):
-                                    liste_mouvements.append((piece_position[0] + (x * chain), piece_position[1] + (y * chain)))
-                                    Path = False 
+                                liste_mouvements.append((piece_position[0] + (x * chain), piece_position[1] + (y * chain)))
+                                Path = False 
                             else:
                                 Path = False
                     else:
@@ -723,19 +718,17 @@ class Piece:
         echequier = Echequier.GetContenue()
         Liste_mouvement_possible = self.Mouvement_Possible(Echequier)
         if coordonnees in Liste_mouvement_possible:
-            echequier[self.Translate_coordonnees()[1]][self.Translate_coordonnees()[0]] = None
-            self.SetPosition(coordonnees)
-            Echequier.Ajouter_Piece(self)
-        else:
-            return "Non"
+            if self.Movement_verif_echec(self.Translate_coordonnees(), Echequier):
+                echequier[self.Translate_coordonnees()[1]][self.Translate_coordonnees()[0]] = None
+                self.Position = coordonnees
+                Echequier.Ajouter_Piece(self)
+                return True
 
     def Movement_verif_echec(self, coordonnees, Echequier):
+        
         echequier = Echequier.GetContenue()
         Back_up_case = echequier[coordonnees[1]][coordonnees[0]]
-        print(Back_up_case)
         Back_up_piece_coordonnees = self.GetPosition()
-        print(Back_up_piece_coordonnees)
-        print(coordonnees)
 
         #Blanc
         if self.GetCouleur():
@@ -755,7 +748,7 @@ class Piece:
             echequier[coordonnees[1]][coordonnees[0]] = None
             self.SetPosition(coordonnees_to_case([coordonnees])[0])
             Echequier.Ajouter_Piece(self)
-            if Echequier.Echec_noir():
+            if not(Echequier.Echec_noir()):
                 return True
             else:
                 self.SetPosition(Back_up_piece_coordonnees)
@@ -904,9 +897,12 @@ print("r1 : ", r1.Mouvement_Possible(Zone_test))
 #print("Blanc en échec ? : ", Zone_test.Echec_blanc())
 #print("Noir en échec ? : ", Zone_test.Echec_noir())
 
-#P1.Move("D3", Zone_test)
+print(r1.Move("C5", Zone_test))
 
-#print(Zone_test.Affichage_provisoire())
+print(Zone_test.Affichage_provisoire())
+print(r1.Move("A6", Zone_test))
+
+print(Zone_test.Affichage_provisoire())
 #=============================================================================
 #
 #=============================================================================
