@@ -14,12 +14,9 @@ app.use(cors());
 // Middleware pour parser le JSON dans le corps des requêtes
 app.use(bodyParser.json());
 
-// Sert les fichiers statiques depuis le dossier où se trouve 'index.html'
-app.use(express.static('E:/Cours/Spé NSI term/ProjetNSI/Frontend/html')); // Modifie cette ligne
-
-// Route pour la page d'accueil
-app.get('/', (req, res) => {
-    res.sendFile(path.join('E:/Cours/Spé NSI term/ProjetNSI/Frontend/html', 'connexion.html')); // Envoie index.html
+app.use(express.static(path.join(__dirname, "Frontend/html")));
+app.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname, "Frontend/html/connexion.html"));
 });
 
 
