@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
     
             // Envoie les données au serveur via une requête POST
-            fetch('https://projet-nsi-iota.vercel.app/login', {
+            fetch('https://projet-nsi-sffl.onrender.com/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ username, password })
@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
 
                 // Envoie la requête pour supprimer le profil au serveur
-                fetch('https://projet-nsi-iota.vercel.app/delete-user', {
+                fetch('https://projet-nsi-sffl.onrender.com/delete-user', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ username: name }) // Envoi des informations de l'utilisateur
@@ -129,7 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             try {
                 // Envoie les données d'inscription au serveur
-                const response = await fetch('https://projet-nsi-iota.vercel.app/register', {
+                const response = await fetch('https://projet-nsi-sffl.onrender.com/register', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ username, password })
