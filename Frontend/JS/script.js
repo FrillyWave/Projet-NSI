@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
     
             // Envoie les données au serveur via une requête POST
-            fetch('http://localhost:3002/login', {
+            fetch('https://projet-nsi-sffl.onrender.com/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ username, password })
