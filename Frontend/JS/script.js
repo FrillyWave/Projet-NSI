@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
 
                 // Envoie la requête pour supprimer le profil au serveur
-                fetch('http://localhost:3002/delete-user', {
+                fetch('https://projet-nsi-sffl.onrender.com/delete-user', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ username: name }) // Envoi des informations de l'utilisateur
@@ -129,7 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             try {
                 // Envoie les données d'inscription au serveur
-                const response = await fetch('http://localhost:3002/register', {
+                const response = await fetch('https://projet-nsi-sffl.onrender.com/register', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ username, password })
