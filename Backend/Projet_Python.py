@@ -272,8 +272,16 @@ class Piece:
                         liste_mouvements.append((piece_position[0] + 1, piece_position[1]))
 
             # petit rook 
+            if K1.GetDeplacement()[0] == 0 and R2.GetDeplacement()[0] == 0:
+                if echequier[7][5] == None and echequier[7][6] == None:
+                    liste_mouvements.append((6,7))
+                    #HERERERER
 
             # grand rock
+            if K1.GetDeplacement()[0] == 0 and R1.GetDeplacement()[0] == 0:
+                if echequier[7][1] == None and echequier[7][2] == None and echequier[7][3] == None and echequier[7][0] != None:
+                    if echequier[7][0] == R1:
+                        liste_mouvements.append((1,7))
 
         # Noir
         else:
@@ -333,6 +341,18 @@ class Piece:
                 else:
                     if echequier[piece_position[1]][piece_position[0] + 1].GetCouleur():
                         liste_mouvements.append((piece_position[0] + 1, piece_position[1]))
+
+            # petit rook 
+            if k1.GetDeplacement()[0] == 0 and r2.GetDeplacement()[0] == 0:
+                if echequier[0][5] == None and echequier[0][6] == None and echequier[0][7] != None:
+                    if echequier[0][7] == r2:
+                        liste_mouvements.append((6,0))
+
+            # grand rock
+            if k1.GetDeplacement()[0] == 0 and r1.GetDeplacement()[0] == 0:
+                if echequier[0][1] == None and echequier[0][2] == None and echequier[0][3] == None and echequier[0][0] != None:
+                    if echequier[0][0] == r1:
+                        liste_mouvements.append((1,0))
         
         return liste_mouvements
 
@@ -766,6 +786,77 @@ class Piece:
     def Move(self, coordonnees, Echequier):
         echequier = Echequier.GetContenue()
         Liste_mouvement_possible = self.Mouvement_Possible(Echequier)
+
+        #Grand et petit rock
+        if self.GetType() == 'K':
+            #Blanc 
+            if self.GetCouleur():
+                #petit rock
+                if coordonnees == "G1":
+                    Liste_mouvement_possible.remove("G1")
+                    if K1.GetDeplacement()[0] == 0 and R2.GetDeplacement()[0] == 0:
+                        if K1.Movement_verif_echec((6,7), Echequier) and K1.Movement_verif_echec((5,7), Echequier) and not(Echequier.Echec_blanc()):
+                            echequier[7][4] = None
+                            K1.Position = "G1"
+                            Echequier.Ajouter_Piece(K1)
+                            Echequier.SetContenue(echequier)
+                            K1.SetDeplacement((K1.GetDeplacement()[0]+1 ,K1.GetDeplacement()[1]))
+
+                            echequier[7][7] = None
+                            R2.Position = "F1"
+                            Echequier.Ajouter_Piece(R2)
+                            Echequier.SetContenue(echequier)
+                            R2.SetDeplacement((R2.GetDeplacement()[0]+1 ,R2.GetDeplacement()[1]))
+                #grand rock
+                if coordonnees == "B1":
+                    Liste_mouvement_possible.remove("B1")
+                    if K1.GetDeplacement()[0] == 0 and R1.GetDeplacement()[0] == 0:
+                        if K1.Movement_verif_echec((1,7), Echequier) and K1.Movement_verif_echec((2,7), Echequier) and K1.Movement_verif_echec((3,7), Echequier) and not(Echequier.Echec_blanc()):
+                            echequier[7][4] = None
+                            K1.Position = "B1"
+                            Echequier.Ajouter_Piece(K1)
+                            Echequier.SetContenue(echequier)
+                            K1.SetDeplacement((K1.GetDeplacement()[0]+1 ,K1.GetDeplacement()[1]))
+
+                            echequier[7][0] = None
+                            R1.Position = "C1"
+                            Echequier.Ajouter_Piece(R1)
+                            Echequier.SetContenue(echequier)
+                            R1.SetDeplacement((R1.GetDeplacement()[0]+1 ,R1.GetDeplacement()[1]))
+                                 
+            else:
+                #petit rock
+                if coordonnees == "G8":
+                    Liste_mouvement_possible.remove("G8")
+                    if k1.GetDeplacement()[0] == 0 and r2.GetDeplacement()[0] == 0:
+                        if k1.Movement_verif_echec((6,0), Echequier) and k1.Movement_verif_echec((5,0), Echequier) and not(Echequier.Echec_noir()):
+                            echequier[0][4] = None
+                            k1.Position = "G8"
+                            Echequier.Ajouter_Piece(k1)
+                            Echequier.SetContenue(echequier)
+                            k1.SetDeplacement((k1.GetDeplacement()[0]+1 ,k1.GetDeplacement()[1]))
+
+                            echequier[0][7] = None
+                            r2.Position = "F8"
+                            Echequier.Ajouter_Piece(r2)
+                            Echequier.SetContenue(echequier)
+                            r2.SetDeplacement((r2.GetDeplacement()[0]+1 ,r2.GetDeplacement()[1]))
+                #grand rock
+                if coordonnees == "B8":
+                    Liste_mouvement_possible.remove("B8")
+                    if k1.GetDeplacement()[0] == 0 and r1.GetDeplacement()[0] == 0:
+                        if k1.Movement_verif_echec((1,0), Echequier) and k1.Movement_verif_echec((2,0), Echequier) and k1.Movement_verif_echec((3,0), Echequier) and not(Echequier.Echec_noir()):
+                            echequier[0][4] = None
+                            k1.Position = "B8"
+                            Echequier.Ajouter_Piece(k1)
+                            Echequier.SetContenue(echequier)
+                            k1.SetDeplacement((k1.GetDeplacement()[0]+1 ,k1.GetDeplacement()[1]))
+
+                            echequier[0][0] = None
+                            r1.Position = "C8"
+                            Echequier.Ajouter_Piece(r1)
+                            Echequier.SetContenue(echequier)
+                            r1.SetDeplacement((r1.GetDeplacement()[0]+1 ,r1.GetDeplacement()[1]))
         ancienne_coordonnees = (self.Translate_coordonnees()[0], self.Translate_coordonnees()[1])
         if coordonnees in Liste_mouvement_possible:
             if self.Movement_verif_echec(Translate_coordonnees(coordonnees), Echequier):
@@ -773,6 +864,8 @@ class Piece:
                 self.Position = coordonnees
                 Echequier.Ajouter_Piece(self)
                 Echequier.SetContenue(echequier)
+
+                
                 
                 #pion fin de ligne + prépa en passant + en passant
                 if self.GetType() == 'P':
@@ -786,10 +879,10 @@ class Piece:
                             change = str(input("En quoi veux tu transformer ton pion ? (H, Q, B, R)"))
                             self.SetType(change)
                             self.SetNom(change+"  ")
+                        #en passant
                         if echequier[self.Translate_coordonnees()[1] + 1][self.Translate_coordonnees()[0]] != None:
-                            print("True0")
                             if echequier[self.Translate_coordonnees()[1] + 1][self.Translate_coordonnees()[0]].GetDeplacement()[0] == 1 and echequier[self.Translate_coordonnees()[1] + 1][self.Translate_coordonnees()[0]].GetDeplacement()[1]:
-                                echequier[self.Translate_coordonnees()[1] + 1][self.Translate_coordonnees()[0]] == None
+                                echequier[self.Translate_coordonnees()[1] + 1][self.Translate_coordonnees()[0]] = None
                                 Echequier.SetContenue(echequier)
                     #noir
                     else:
@@ -803,9 +896,8 @@ class Piece:
                             self.SetNom(change.lower()+"  ")
                         #en passant
                         if echequier[self.Translate_coordonnees()[1] - 1][self.Translate_coordonnees()[0]] != None:
-                            print("True1")
                             if echequier[self.Translate_coordonnees()[1] - 1][self.Translate_coordonnees()[0]].GetDeplacement()[0] == 1 and echequier[self.Translate_coordonnees()[1] - 1][self.Translate_coordonnees()[0]].GetDeplacement()[1]:
-                                echequier[self.Translate_coordonnees()[1] - 1][self.Translate_coordonnees()[0]] == None
+                                echequier[self.Translate_coordonnees()[1] - 1][self.Translate_coordonnees()[0]] = None
                                 Echequier.SetContenue(echequier)
                     self.SetDeplacement((self.GetDeplacement()[0]+1 ,self.GetDeplacement()[1]))
                 return True
@@ -821,6 +913,9 @@ class Piece:
             self.SetPosition(coordonnees_to_case([coordonnees])[0])
             Echequier.Ajouter_Piece(self)
             if not(Echequier.Echec_blanc()):
+                self.SetPosition(Back_up_piece_coordonnees)
+                echequier[coordonnees[1]][coordonnees[0]] = Back_up_case
+                Echequier.Ajouter_Piece(self)
                 return True
             else:
                 self.SetPosition(Back_up_piece_coordonnees)
@@ -835,6 +930,9 @@ class Piece:
             Echequier.SetContenue(echequier)
             Echequier.Ajouter_Piece(self)
             if not(Echequier.Echec_noir()):
+                self.SetPosition(Back_up_piece_coordonnees)
+                echequier[coordonnees[1]][coordonnees[0]] = Back_up_case
+                Echequier.Ajouter_Piece(self)
                 return True
             else:
                 self.SetPosition(Back_up_piece_coordonnees)
@@ -932,6 +1030,14 @@ class Echequier:
             if All_move[i] == case_king:
                 return True
         return False
+    def EchecMat_noir(self):
+        if self.Echec_noir():
+            All_move = self.All_move()[1]
+            for i in range(len(All_move)):
+                
+
+
+
 
     def __repr__(self):
         return f"Echequier : {self.Contenue}"
@@ -946,25 +1052,29 @@ Zone_test = Echequier()
 P1 = Piece(" P1", "C2", "P", True)
 #P2 = Piece(" P2", "D2", "P", True)
 p1 = Piece(" p1", "B7", "P", False)
-#R1 = Piece(" R1", "F3", "R", True)
+R1 = Piece(" R1", "A1", "R", True)
 #b1 = Piece(" b1", "E4", "B", False)
 #Q1 = Piece(" Q1", "C4", "Q", True)
 #h1 = Piece(" h1", "D6", "H", False)
-K1 = Piece(" K1", "H8", "K", True)
-k1 = Piece(" k1", "H1", "K", False)
-#r1 = Piece(" r1", "B6", "R", False)
+K1 = Piece(" K1", "E1", "K", True)
+k1 = Piece(" k1", "E8", "K", False)
+r1 = Piece(" r1", "A8", "R", False)
+R2 = Piece(" R2", "H1", "R", True)
+r2 = Piece(" r2", "H8", "R", False)
 
 
 Zone_test.Ajouter_Piece(P1)
 #Zone_test.Ajouter_Piece(P2)
 Zone_test.Ajouter_Piece(p1)
-#Zone_test.Ajouter_Piece(R1)
+Zone_test.Ajouter_Piece(R1)
 #Zone_test.Ajouter_Piece(b1)
 #Zone_test.Ajouter_Piece(Q1)
 #Zone_test.Ajouter_Piece(h1)
 Zone_test.Ajouter_Piece(K1)
 Zone_test.Ajouter_Piece(k1)
-#Zone_test.Ajouter_Piece(r1)
+Zone_test.Ajouter_Piece(r1)
+Zone_test.Ajouter_Piece(r2)
+Zone_test.Ajouter_Piece(R2)
 
 print(Zone_test.Affichage_provisoire())
 
@@ -975,36 +1085,14 @@ print(Zone_test.Affichage_provisoire())
 #print("b1 : ", b1.Mouvement_Possible(Zone_test))
 #print("Q1 : ", Q1.Mouvement_Possible(Zone_test))
 #print("h1 : ", h1.Mouvement_Possible(Zone_test))
-#print("K1 : ", K1.Mouvement_Possible(Zone_test))
+print("K1 : ", K1.Mouvement_Possible(Zone_test))
+K1.Move("G1", Zone_test)
+print("test")
+print(Zone_test.Affichage_provisoire())
+
+print("k1 : ", k1.Mouvement_Possible(Zone_test))
+print(k1.Move("G8",Zone_test))
 #print("r1 : ", r1.Mouvement_Possible(Zone_test))
-
-#print("All Move : ", Zone_test.All_move())
-
-#print("Blanc en échec ? : ", Zone_test.Echec_blanc())
-#print("Noir en échec ? : ", Zone_test.Echec_noir())
-
-print("P1 : ", P1.Mouvement_Possible(Zone_test))
-
-print(P1.Move("C4", Zone_test))
-
-print(Zone_test.Affichage_provisoire())
-
-print("P1 : ", P1.Mouvement_Possible(Zone_test))
-
-print(P1.Move("C5", Zone_test))
-
-print(Zone_test.Affichage_provisoire())
-
-print("p1 : ", p1.Mouvement_Possible(Zone_test))
-
-print(p1.Move("B5", Zone_test))
-
-print(Zone_test.Affichage_provisoire())
-
-print("P1 : ", P1.Mouvement_Possible(Zone_test))
-
-print(P1.Move("B6", Zone_test))
-
 print(Zone_test.Affichage_provisoire())
 
 #=============================================================================
