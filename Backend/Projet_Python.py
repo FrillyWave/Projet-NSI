@@ -199,7 +199,7 @@ class Piece:
                         liste_mouvements.append((piece_position[0] + 1, piece_position[1] + 1))
             # diagonale gauche
             if piece_position[1] + 1 <= 7 and piece_position[0] - 1 >= 0:
-                if echequier[piece_position[1] + 1][piece_position[0] - 1] != None:
+                if echequier[piece_position[1]][piece_position[0] - 1] != None:
                     if echequier[piece_position[1]][piece_position[0] - 1].GetDeplacement()[0] == 1 and echequier[piece_position[1]][piece_position[0] - 1].GetDeplacement()[1]:
                         liste_mouvements.append((piece_position[0] - 1, piece_position[1] + 1))
         
@@ -1142,66 +1142,208 @@ class Echequier:
     def __repr__(self):
         return f"Echequier : {self.Contenue}"
 
+
+def Main():
+    #Set up échequier initiale 
+    E = Echequier()
+    echequier = E.GetContenue()
+    #Blanc 
+    #Créer pièces
+    #Première ligne
+    P1 = Piece(" P1", "A2", "P", True)
+    P2 = Piece(" P2", "B2", "P", True)
+    P3 = Piece(" P3", "C2", "P", True)
+    P4 = Piece(" P4", "D2", "P", True)
+    P5 = Piece(" P5", "E2", "P", True)
+    P6 = Piece(" P6", "F2", "P", True)
+    P7 = Piece(" P7", "G2", "P", True)
+    P8 = Piece(" P8", "H2", "P", True)
+    #Deuxième ligne
+    R1 = Piece(" R1", "A1", "R", True)
+    H1 = Piece(" H1", "B1", "H", True)
+    B1 = Piece(" B1", "C1", "B", True)
+    Q1 = Piece(" Q1", "D1", "Q", True)
+    K1 = Piece(" K1", "E1", "K", True)
+    B2 = Piece(" B2", "F1", "B", True)
+    H2 = Piece(" H2", "G1", "H", True)
+    R2 = Piece(" R2", "H1", "R", True)
+    #Ajouter pièces à l'échequier
+    #Première ligne
+    E.Ajouter_Piece(P1)
+    E.Ajouter_Piece(P2)
+    E.Ajouter_Piece(P3)
+    E.Ajouter_Piece(P4)
+    E.Ajouter_Piece(P5)
+    E.Ajouter_Piece(P6)
+    E.Ajouter_Piece(P7)
+    E.Ajouter_Piece(P8)
+    #Deuxième ligne
+    E.Ajouter_Piece(R1)
+    E.Ajouter_Piece(H1)
+    E.Ajouter_Piece(B1)
+    E.Ajouter_Piece(Q1)
+    E.Ajouter_Piece(K1)
+    E.Ajouter_Piece(B2)
+    E.Ajouter_Piece(H2)
+    E.Ajouter_Piece(R2)
+
+    #Noir
+    #Créer pièces
+    #Première ligne
+    p1 = Piece(" p1", "A7", "P", False)
+    p2 = Piece(" p2", "B7", "P", False)
+    p3 = Piece(" p3", "C7", "P", False)
+    p4 = Piece(" p4", "D7", "P", False)
+    p5 = Piece(" p5", "E7", "P", False)
+    p6 = Piece(" p6", "F7", "P", False)
+    p7 = Piece(" p7", "G7", "P", False)
+    p8 = Piece(" p8", "H7", "P", False)
+    #Deuxième ligne
+    r1 = Piece(" r1", "A8", "R", False)
+    h1 = Piece(" h1", "B8", "H", False)
+    b1 = Piece(" b1", "C8", "B", False)
+    q1 = Piece(" q1", "D8", "Q", False)
+    k1 = Piece(" k1", "E8", "K", False)
+    b2 = Piece(" b2", "F8", "B", False)
+    h2 = Piece(" h2", "G8", "H", False)
+    r2 = Piece(" r2", "H8", "R", False)
+    #Ajouter pièces à l'échequier
+    #Première ligne
+    E.Ajouter_Piece(p1)
+    E.Ajouter_Piece(p2)
+    E.Ajouter_Piece(p3)
+    E.Ajouter_Piece(p4)
+    E.Ajouter_Piece(p5)
+    E.Ajouter_Piece(p6)
+    E.Ajouter_Piece(p7)
+    E.Ajouter_Piece(p8)
+    #Deuxième ligne
+    E.Ajouter_Piece(r1)
+    E.Ajouter_Piece(h1)
+    E.Ajouter_Piece(b1)
+    E.Ajouter_Piece(q1)
+    E.Ajouter_Piece(k1)
+    E.Ajouter_Piece(b2)
+    E.Ajouter_Piece(h2)
+    E.Ajouter_Piece(r2)
+
+    Turn = True 
+    while not(E.EchecMat_blanc()) and not(E.EchecMat_noir()):
+        print(E.Affichage_provisoire())
+        print("Mat Blanc : ", E.EchecMat_blanc())
+        print("Mat Noir : ", E.EchecMat_noir())
+        if Turn:
+            print("C'est au Blanc de jouer !")
+            CO_Piece = input("Quelle pièce voulez vous déplacer (Exemple : 'A3') ?")
+            CO_Piece = Translate_coordonnees(CO_Piece)
+            print(CO_Piece)
+            if echequier[CO_Piece[1]][CO_Piece[0]] != None:
+                if echequier[CO_Piece[1]][CO_Piece[0]].GetCouleur():
+                    Deplacement_Piece = input("Ou voulez vous la déplacer (Exemple : 'B7') ?")
+                    echequier[CO_Piece[1]][CO_Piece[0]].Move(Deplacement_Piece, E)
+                    Turn = not(Turn)
+        else:
+            print("C'est au Noir de jouer !")
+            CO_Piece = input("Quelle pièce voulez vous déplacer (Exemple : 'A3') ?")
+            CO_Piece = Translate_coordonnees(CO_Piece)
+            if echequier[CO_Piece[1]][CO_Piece[0]] != None:
+                if not(echequier[CO_Piece[1]][CO_Piece[0]].GetCouleur()):
+                    Deplacement_Piece = input("Ou voulez vous la déplacer (Exemple : 'B7') ?")
+                    echequier[CO_Piece[1]][CO_Piece[0]].Move(Deplacement_Piece, E)
+                    Turn = not(Turn)
+    return "Partie fini"
+                    
+
+
+
+
+
 #=============================================================================
 #ZONE TEST
 #=============================================================================
-
-Zone_test = Echequier()
-
-
-#P1 = Piece(" P1", "C2", "P", True)
-#P2 = Piece(" P2", "D2", "P", True)
-#p1 = Piece(" p1", "B7", "P", False)
-R1 = Piece(" R1", "F7", "R", True)
-#b1 = Piece(" b1", "E4", "B", False)
-#Q1 = Piece(" Q1", "E7", "Q", True)
-#Q2 = Piece(" Q2", "E6", "Q", True)
-#h1 = Piece(" h1", "D6", "H", False)
+#Set up échequier initiale 
+E = Echequier()
+echequier = E.GetContenue()
+#Blanc 
+#Créer pièces
+#Première ligne
+P1 = Piece(" P1", "A2", "P", True)
+P2 = Piece(" P2", "B2", "P", True)
+P3 = Piece(" P3", "C2", "P", True)
+P4 = Piece(" P4", "D2", "P", True)
+P5 = Piece(" P5", "E2", "P", True)
+P6 = Piece(" P6", "F2", "P", True)
+P7 = Piece(" P7", "G2", "P", True)
+P8 = Piece(" P8", "H2", "P", True)
+#Deuxième ligne
+R1 = Piece(" R1", "A1", "R", True)
+H1 = Piece(" H1", "B1", "H", True)
+B1 = Piece(" B1", "C1", "B", True)
+Q1 = Piece(" Q1", "D1", "Q", True)
 K1 = Piece(" K1", "E1", "K", True)
-k1 = Piece(" k1", "E8", "K", False)
+B2 = Piece(" B2", "F1", "B", True)
+H2 = Piece(" H2", "G1", "H", True)
+R2 = Piece(" R2", "H1", "R", True)
+#Ajouter pièces à l'échequier
+#Première ligne
+E.Ajouter_Piece(P1)
+E.Ajouter_Piece(P2)
+E.Ajouter_Piece(P3)
+E.Ajouter_Piece(P4)
+E.Ajouter_Piece(P5)
+E.Ajouter_Piece(P6)
+E.Ajouter_Piece(P7)
+E.Ajouter_Piece(P8)
+#Deuxième ligne
+E.Ajouter_Piece(R1)
+E.Ajouter_Piece(H1)
+E.Ajouter_Piece(B1)
+E.Ajouter_Piece(Q1)
+E.Ajouter_Piece(K1)
+E.Ajouter_Piece(B2)
+E.Ajouter_Piece(H2)
+E.Ajouter_Piece(R2)
+
+#Noir
+#Créer pièces
+#Première ligne
+p1 = Piece(" p1", "A7", "P", False)
+p2 = Piece(" p2", "B7", "P", False)
+p3 = Piece(" p3", "C7", "P", False)
+p4 = Piece(" p4", "D7", "P", False)
+p5 = Piece(" p5", "E7", "P", False)
+p6 = Piece(" p6", "F7", "P", False)
+p7 = Piece(" p7", "G7", "P", False)
+p8 = Piece(" p8", "H7", "P", False)
+#Deuxième ligne
 r1 = Piece(" r1", "A8", "R", False)
-R2 = Piece(" R2", "D7", "R", True)
+h1 = Piece(" h1", "B8", "H", False)
+b1 = Piece(" b1", "C8", "B", False)
+q1 = Piece(" q1", "D8", "Q", False)
+k1 = Piece(" k1", "E8", "K", False)
+b2 = Piece(" b2", "F8", "B", False)
+h2 = Piece(" h2", "G8", "H", False)
 r2 = Piece(" r2", "H8", "R", False)
-#r3 = Piece(" r3", "H7", "R", False)
-
-
-#Zone_test.Ajouter_Piece(P1)
-#Zone_test.Ajouter_Piece(P2)
-#Zone_test.Ajouter_Piece(p1)
-#Zone_test.Ajouter_Piece(R1)
-#Zone_test.Ajouter_Piece(b1)
-#Zone_test.Ajouter_Piece(Q1)
-#Zone_test.Ajouter_Piece(Q2)
-#Zone_test.Ajouter_Piece(h1)
-
-Zone_test.Ajouter_Piece(K1)
-Zone_test.Ajouter_Piece(k1)
-#Zone_test.Ajouter_Piece(r1)
-#Zone_test.Ajouter_Piece(r2)
-#Zone_test.Ajouter_Piece(r3)
-#Zone_test.Ajouter_Piece(R2)
-
-print(Zone_test.Affichage_provisoire())
-
-#print("P1 : ", P1.Mouvement_Possible(Zone_test))
-#print("P2 : ", P2.Mouvement_Possible(Zone_test))
-#print("p1 : ", p1.Mouvement_Possible(Zone_test))
-#print("R1 : ", R1.Mouvement_Possible(Zone_test))
-#print("b1 : ", b1.Mouvement_Possible(Zone_test))
-#print("Q1 : ", Q1.Mouvement_Possible(Zone_test))
-#print("h1 : ", h1.Mouvement_Possible(Zone_test))
-#print("K1 : ", K1.Mouvement_Possible(Zone_test))
-#K1.Move("G1", Zone_test)
-#print("test")
-#print(Zone_test.Affichage_provisoire())
-
-#print("k1 : ", k1.Mouvement_Possible(Zone_test))
-#print(k1.Move("G8",Zone_test))
-#print("r1 : ", r1.Mouvement_Possible(Zone_test))
-#print(Zone_test.Affichage_provisoire())
-print(Zone_test.EchecMat_noir())
-print(Zone_test.EchecMat_blanc())
-print(Zone_test.Nulle_evidente())
+#Ajouter pièces à l'échequier
+#Première ligne
+E.Ajouter_Piece(p1)
+E.Ajouter_Piece(p2)
+E.Ajouter_Piece(p3)
+E.Ajouter_Piece(p4)
+E.Ajouter_Piece(p5)
+E.Ajouter_Piece(p6)
+E.Ajouter_Piece(p7)
+E.Ajouter_Piece(p8)
+#Deuxième ligne
+E.Ajouter_Piece(r1)
+E.Ajouter_Piece(h1)
+E.Ajouter_Piece(b1)
+E.Ajouter_Piece(q1)
+E.Ajouter_Piece(k1)
+E.Ajouter_Piece(b2)
+E.Ajouter_Piece(h2)
+E.Ajouter_Piece(r2)
+print(Main())
 
 #=============================================================================
 #   
