@@ -1343,7 +1343,8 @@ E.Ajouter_Piece(k1)
 E.Ajouter_Piece(b2)
 E.Ajouter_Piece(h2)
 E.Ajouter_Piece(r2)
-print(Main())
+#print(Main())
+print("coucou")
 
 #=============================================================================
 #   
