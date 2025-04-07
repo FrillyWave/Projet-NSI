@@ -148,7 +148,48 @@ img{
     display: inline-block;
 }
 
+/* Labels et champs de texte */
+#deplacement label {
+    font-size: 1.1em;
+    color: #333;
+    margin: 10px 0 5px;
+}
 
+#deplacement input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1em;
+    background-color: #f8f8f8;
+    transition: border-color 0.3s ease;
+}
+
+#deplacement input:focus {
+    border-color: #2575fc;
+    outline: none;
+}
+
+/* Style du bouton */
+#deplacement button {
+    background-color: #2575fc;
+    margin: 5px;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 15px 30px;
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s;
+    width: 100%;
+}
+
+/* Effet au survol du bouton */
+#deplacement button:hover {
+    background-color: #6a11cb;
+    transform: scale(1.05);
+}
 
 /* Conteneur principal du formulaire */
 #connexion-container {
