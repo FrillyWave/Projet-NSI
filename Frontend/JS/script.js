@@ -51,7 +51,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    
+   function valider() {
+            depart=document.getElementById("origine").value
+            arrivée=document.getElementById("destination").value
+
+            alert("deplacer piece de "+depart+" a "+arrivée)
+        } 
 
     /**
      * Gestion du bouton "Supprimer le profil"
@@ -166,7 +171,7 @@ document.addEventListener('DOMContentLoaded', () => {
 /**
  * Fonction pour quitter une fenêtre ou rediriger vers une autre page
  */
-function quitter() {
+function refresh() {
     let openedWindow
 
     openedWindow = window.open("../html/main.html");
