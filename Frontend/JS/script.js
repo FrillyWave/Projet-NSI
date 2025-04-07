@@ -51,13 +51,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-   function valider() {
-            depart=document.getElementById("origine").value
-            arrivée=document.getElementById("destination").value
-
-            alert("deplacer piece de "+depart+" a "+arrivée)
-        } 
-
     /**
      * Gestion du bouton "Supprimer le profil"
      */
@@ -177,3 +170,10 @@ function refresh() {
     openedWindow = window.open("../html/main.html");
     openedWindow = window.close("../html/main.html");
 }
+
+function valider() {
+            depart=document.getElementById("origine").value
+            arrivée=document.getElementById("destination").value
+
+            alert("deplacer piece de "+depart+" a "+arrivée)
+} 
