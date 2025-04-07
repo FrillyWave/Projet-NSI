@@ -177,3 +177,21 @@ function valider() {
 
             alert("deplacer piece de "+depart+" a "+arrivée)
 } 
+
+
+function lancerPartie() {
+    fetch("https://projet-nsi-sffl.onrender.com/api/start-game")
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Échec de démarrage de la partie.");
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log("Réponse du script Python :", data);
+            // Tu peux ensuite afficher les données ou démarrer l'interface du jeu
+        })
+        .catch(error => {
+            console.error("Erreur lors du lancement de la partie :", error);
+        });
+}
