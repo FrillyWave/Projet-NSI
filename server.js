@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const fs = require('fs');
 const cors = require('cors');
 const bcrypt = require('bcryptjs');
+const axios = require('axios')
 
 const app = express();
 const PORT = 3002;
@@ -99,6 +100,17 @@ app.post('/login', async (req, res) => {
             res.status(400).send(`Nom d'utilisateur ou mot de passe incorrect`);
         }
     });
+});
+
+app.get("/api/start-game", async (req, res) => {
+    try {
+        // Envoie une requête au serveur du jeu pour démarrer la partie
+        const response = await axios.get("https://projet-nsi-sffl.onrender.com/api/run-python");
+        res.json(response.data); // Transmet la réponse du serveur de jeu au frontend
+    } catch (error) {
+        console.error("Erreur lors de la communication avec le serveur de jeu", error);
+        res.status(500).send("Erreur du serveur de jeu");
+    }
 });
 
 // Lancer le serveur
