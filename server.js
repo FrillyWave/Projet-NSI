@@ -103,9 +103,12 @@ app.post('/login', async (req, res) => {
     });
 });
 
-const scriptPath = path.join(__dirname, "Backend", "projet_Python.py")
+
 
 app.get("/api/run-python", (req, res) => {
+
+    const scriptPath = path.join(__dirname, "Backend", "projet_Python.py")
+    
     const pythonProcess = spawn("python3", [scriptPath]);
 
     let output = "";
