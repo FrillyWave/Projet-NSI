@@ -189,9 +189,10 @@ function lancerPartie() {
         })
         .then(data => {
             console.log("Réponse du script Python :", data);
-            // Tu peux ensuite afficher les données ou démarrer l'interface du jeu
+            document.getElementById("output").textContent = data.output || "Aucune sortie.";
         })
         .catch(error => {
             console.error("Erreur lors du lancement de la partie :", error);
+            document.getElementById("output").textContent = "Erreur : " + error.message;
         });
 }
