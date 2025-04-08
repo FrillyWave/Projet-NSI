@@ -1,3 +1,31 @@
+/* Header */
+header {
+    width: 100%;
+    background-color: #2575fc;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    font-size: 2em;
+    font-weight: bold;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    top: 0;
+    animation: slideIn 1s ease-out; /* Animation d'apparition */ 
+    position: fixed;
+    height: 150px;
+    
+}
+
+#logo{
+    text-align: center;
+    display: inline-block;
+    padding-right: 15px;
+}
+
+#titre{
+    text-align: center;
+    display: inline-block;
+}
+
 /* Animation pour l'apparition du header */
 @keyframes slideIn {
     from {
@@ -17,6 +45,9 @@
     box-sizing: border-box;
 }
 
+html, body {
+    height: 100%;    
+}
 
 body {
     font-family: 'Arial', sans-serif;
@@ -40,27 +71,6 @@ body {
     padding-bottom: 67px;
 }
 
-/* Header */
-header {
-    width: 100%;
-    background-color: #2575fc;
-    color: white;
-    text-align: center;
-    padding: 20px;
-    font-size: 2em;
-    font-weight: bold;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    top: 0;
-    animation: slideIn 1s ease-out; /* Animation d'apparition */ 
-    position: fixed;
-    height: 150px;
-    
-}
-
-html, body {
-    height: 100%;    
-}
-
 /* Styling du conteneur nav */
 nav ul {
     list-style: none;
@@ -73,10 +83,6 @@ nav ul {
 /* Style des éléments de liste */
 nav ul li {
     margin-right: 30px;
-}
-
-#deleteProfileButton {
-    color: #2575FC;
 }
 
 nav ul li:last-child {
@@ -110,15 +116,15 @@ nav ul li a::before {
     transition: transform 0.3s ease;
 }
 
+nav ul li a:hover {
+    background-color: rgba(255, 255, 255, 0.2); /* Effet de survol en transparence */
+    color: #ffeb3b; /* Changement de couleur au hover */
+}
+
 /* Lien en hover avec un effet */
 nav ul li a:hover::before {
     transform: scaleX(1);
     transform-origin: left;
-}
-
-nav ul li a:hover {
-    background-color: rgba(255, 255, 255, 0.2); /* Effet de survol en transparence */
-    color: #ffeb3b; /* Changement de couleur au hover */
 }
 
 /* Liens actifs */
@@ -128,17 +134,6 @@ nav ul li a:active {
 
 img{
     height: 50px;
-}
-
-#logo{
-    text-align: center;
-    display: inline-block;
-    padding-right: 15px;
-}
-
-#titre{
-    text-align: center;
-    display: inline-block;
 }
 
 /* Conteneur principal du formulaire */
@@ -160,6 +155,31 @@ img{
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     width: 100%;
     max-width: 400px; /* Limite la largeur du formulaire */
+}
+
+/* Effet au survol du bouton */
+#deplacement button:hover {
+    background-color: #6a11cb;
+    transform: scale(1.05);
+}
+
+/* Liens */
+#connexion-form p a {
+    color: #2575fc;
+    text-decoration: none;
+}
+
+#connexion-form p a:hover {
+    text-decoration: underline;
+}
+
+#echiquier {
+    width: 600px;
+    min-height: 600px; /* ou pas de height du tout si tu veux que ça s’adapte */
+    background-image: url(../Image/echiquier.webp);
+    background-size: 150px;
+    background-repeat: repeat;
+    padding: 20px;
 }
 
 /* Labels et champs de texte */
@@ -199,30 +219,6 @@ img{
     width: 100%;
 }
 
-/* Effet au survol du bouton */
-#deplacement button:hover {
-    background-color: #6a11cb;
-    transform: scale(1.05);
-}
-
-/* Liens */
-#connexion-form p a {
-    color: #2575fc;
-    text-decoration: none;
-}
-
-#connexion-form p a:hover {
-    text-decoration: underline;
-}
-
-#echiquier {
-    width: 600px;
-    min-height: 600px; /* ou pas de height du tout si tu veux que ça s’adapte */
-    background-image: url(../Image/echiquier.webp);
-    background-size: 150px;
-    background-repeat: repeat;
-    padding: 20px;
-}
 /* Footer */
 footer {
     text-align: center;
@@ -300,4 +296,3 @@ footer {
         max-width: 80%;
     }
 }
-
