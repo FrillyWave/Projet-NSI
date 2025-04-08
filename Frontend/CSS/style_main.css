@@ -10,29 +10,6 @@
     }
 }
 
-@media (max-width: 768px) {
-    nav ul {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    #connexion-container {
-        width: 90%;
-    }
-
-    header {
-        position: relative;
-        padding: 10px;
-        font-size: 1.5em;
-    }
-
-    body {
-        height: auto;
-        padding-bottom: 20px;
-    }
-    }
-
-
 /* Reset CSS */
 * {
     margin: 0;
@@ -43,13 +20,24 @@
 
 body {
     font-family: 'Arial', sans-serif;
-    background: linear-gradient(135deg, #e0eafc, #cfdef3); /* Dégradé de fond */
+    background: linear-gradient(135deg, #e0eafc, #cfdef3); /* Dégradé de fou */
     height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     padding: 0 20px;
+    overflow-y: auto; /* Permet le défilement vertical si nécessaire */
+    height: 100vh; /* S'assure que le body occupe toute la hauteur de l'écran */
+    margin: 0;
+    padding: 0;
+    min-height: 100vh; /* Assure une hauteur minimum */
+}
+
+#container {
+    flex: 1;
+    margin-top: 320px;
+    padding-bottom: 67px;
 }
 
 /* Header */
@@ -62,9 +50,15 @@ header {
     font-size: 2em;
     font-weight: bold;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    position: absolute;
     top: 0;
-    animation: slideIn 1s ease-out; /* Animation d'apparition */
+    animation: slideIn 1s ease-out; /* Animation d'apparition */ 
+    position: fixed;
+    height: 150px;
+    
+}
+
+html, body {
+    height: 100%;    
 }
 
 /* Styling du conteneur nav */
@@ -140,12 +134,32 @@ img{
     text-align: center;
     display: inline-block;
     padding-right: 15px;
-    
 }
 
 #titre{
     text-align: center;
     display: inline-block;
+}
+
+/* Conteneur principal du formulaire */
+#connexion-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 100px;
+    width: 100%;
+}
+
+/* Style du formulaire */
+#connexion-form {
+    text-align: center;
+    padding: 40px 25px;
+    background: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px; /* Limite la largeur du formulaire */
 }
 
 /* Labels et champs de texte */
@@ -191,72 +205,6 @@ img{
     transform: scale(1.05);
 }
 
-/* Conteneur principal du formulaire */
-#connexion-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    margin-top: 100px;
-    width: 100%;
-}
-
-/* Style du formulaire */
-#connexion-form {
-    text-align: center;
-    padding: 40px 25px;
-    background: #ffffff;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 400px; /* Limite la largeur du formulaire */
-}
-
-/* Labels et champs de texte */
-#connexion-form label {
-    font-size: 1.1em;
-    color: #333;
-    display: block;
-    margin: 10px 0 5px;
-}
-
-#connexion-form input {
-    width: 100%;
-    padding: 12px;
-    margin: 10px 0;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    font-size: 1em;
-    background-color: #f8f8f8;
-    transition: border-color 0.3s ease;
-}
-
-#connexion-form input:focus {
-    border-color: #2575fc;
-    outline: none;
-}
-
-/* Style du bouton */
-#connexion-form button {
-    background-color: #2575fc;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    padding: 15px 30px;
-    font-size: 1.2em;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    width: 100%;
-}
-
-/* Effet au survol du bouton */
-#connexion-form button:hover {
-    background-color: #6a11cb;
-    transform: scale(1.05);
-}
-
 /* Liens */
 #connexion-form p a {
     color: #2575fc;
@@ -267,16 +215,14 @@ img{
     text-decoration: underline;
 }
 
-#echiquier{
-    margin-top: 60px;
-    height: 600px;
+#echiquier {
     width: 600px;
+    min-height: 600px; /* ou pas de height du tout si tu veux que ça s’adapte */
     background-image: url(../Image/echiquier.webp);
     background-size: 150px;
     background-repeat: repeat;
-
+    padding: 20px;
 }
-
 /* Footer */
 footer {
     text-align: center;
@@ -285,6 +231,73 @@ footer {
     color: white;
     width: 100%;
     font-size: 0.9em;
-    position: absolute;
+    height: 57px;
+    position: fixed;
     bottom: 0;
 }
+
+/* Media Queries pour rendre responsive */
+
+/* Mobile */
+@media (max-width: 767px) {
+    body {
+        padding: 0 10px; /* Réduire la marge sur mobile */
+    }
+
+    header {
+        font-size: 1.5em; /* Réduire la taille de la police du header */
+        padding: 15px;
+    }
+
+    nav ul {
+        flex-direction: column; /* Empile les éléments de navigation */
+    }
+
+    nav ul li {
+        margin-bottom: 15px; /* Ajouter un peu d'espace entre les liens */
+    }
+
+    #connexion-form {
+        padding: 30px 15px;
+        max-width: 90%; /* Utiliser une largeur plus large sur mobile */
+    }
+
+    #connexion-form input {
+        font-size: 0.9em; /* Réduire la taille de la police des champs */
+    }
+
+    #connexion-form button {
+        font-size: 1em; /* Réduire la taille du bouton */
+    }
+
+    #echiquier {
+        width: 100%; /* Adapter l'échiquier à la largeur de l'écran */
+        height: auto; /* Ajuster la hauteur en fonction de la largeur */
+    }
+}
+
+/* Tablette */
+@media (max-width: 1024px) {
+    body {
+        padding: 0 15px;
+    }
+
+    header {
+        font-size: 1.8em;
+        padding: 18px;
+    }
+
+    nav ul {
+        flex-direction: row;
+    }
+
+    nav ul li {
+        margin-right: 20px;
+    }
+
+    #connexion-form {
+        padding: 35px 20px;
+        max-width: 80%;
+    }
+}
+
