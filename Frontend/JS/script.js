@@ -180,7 +180,7 @@ function valider() {
 
 
 function lancerPartie() {
-    fetch("https://projet-nsi-sffl.onrender.com/api/start-game")
+    fetch("/api/run-python")
         .then(response => {
             if (!response.ok) {
                 throw new Error("Échec de démarrage de la partie.");
