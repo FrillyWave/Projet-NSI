@@ -103,17 +103,6 @@ app.post('/login', async (req, res) => {
     });
 });
 
-app.get("/api/start-game", async (req, res) => {
-    try {
-        // Envoie une requête au serveur du jeu pour démarrer la partie
-        const response = await axios.get("https://projet-nsi-sffl.onrender.com/api/run-python");
-        res.json(response.data); // Transmet la réponse du serveur de jeu au frontend
-    } catch (error) {
-        console.error("Erreur lors de la communication avec le serveur de jeu", error);
-        res.status(500).send("Erreur du serveur de jeu");
-    }
-});
-
 const scriptPath = path.join(__dirname, "Backend", "projet_Python.py")
 
 app.get("/api/run-python", (req, res) => {
