@@ -5,6 +5,7 @@ const fs = require('fs');
 const cors = require('cors');
 const bcrypt = require('bcryptjs');
 const axios = require('axios')
+const { spawn } = require('child_process')
 
 const app = express();
 const PORT = 3002;
@@ -111,6 +112,27 @@ app.get("/api/start-game", async (req, res) => {
         console.error("Erreur lors de la communication avec le serveur de jeu", error);
         res.status(500).send("Erreur du serveur de jeu");
     }
+});
+
+const scriptPath = path.join(__dirname, "Backend", "projet_Python.py")
+
+app.get("/api/run-python", (req, res) => {
+    const pythonProcess = spawn("python3", [scriptPath]);
+
+    let output = "";
+    pythonProcess.stdout.on("data", (data) => {
+        output += data.toString();
+    });
+
+    pythonProcess.on("close", (code) => {
+        console.log(`Processus Python terminé avec le code ${code}`);
+        res.json({ output });
+    });
+    
+    pythonProcess.stderr.on("data", (data) => {
+        console.error(`Erreur Python : ${data}`);
+    });
+    
 });
 
 // Lancer le serveur
