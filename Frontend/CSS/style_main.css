@@ -51,7 +51,6 @@ html, body {
 
 body {
     font-family: 'Arial', sans-serif;
-    background: linear-gradient(135deg, #e0eafc, #cfdef3); /* Dégradé de fou */
     height: 100vh;
     display: flex;
     flex-direction: column;
