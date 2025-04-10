@@ -19,7 +19,7 @@
 
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #e0eafc
+    background-color: #e0eafc;
     height: 100vh;
     display: flex;
     flex-direction: column;
