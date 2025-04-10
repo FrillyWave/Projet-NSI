@@ -179,9 +179,14 @@ img{
     background-image: url(../Image/echiquier.webp);
     background-size: 150px;
     background-repeat: repeat;
-    padding: 20px;
 }
 
+#echiquier img {
+    height: 75px;
+    margin-right: -4.5px;
+    margin-bottom: -4.25px;
+
+}
 /* Labels et champs de texte */
 #deplacement label {
     font-size: 1.1em;
