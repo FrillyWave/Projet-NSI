@@ -103,12 +103,10 @@ app.post('/login', async (req, res) => {
     });
 });
 
+const scriptPath = path.join(__dirname, "Backend", "projet_Python.py")
 
-
-app.get("/api/run-python", (req, res) => {
-
-    const scriptPath = path.join(__dirname, "Backend", "projet_Python.py")
-    
+app.get("/api/init", (req, res) => {
+    // Lancer le script Python pour générer l'échiquier
     const pythonProcess = spawn("python3", [scriptPath]);
 
     let output = "";
@@ -116,16 +114,42 @@ app.get("/api/run-python", (req, res) => {
         output += data.toString();
     });
 
-    pythonProcess.on("close", (code) => {
-        console.log(`Processus Python terminé avec le code ${code}`);
-        res.json({ output });
-    });
-    
     pythonProcess.stderr.on("data", (data) => {
         console.error(`Erreur Python : ${data}`);
     });
-    
+
+    pythonProcess.on("close", (code) => {
+        console.log(`Processus Python terminé avec le code ${code}`);
+        
+        // Retourner l'échiquier généré en JSON
+        res.json({ echiquier: JSON.parse(output) });
+    });
 });
+
+app.post("/api/jouer", (req, res) => {
+    const { coup, echiquier } = req.body;
+
+    // Traitement du coup dans le script Python
+    const pythonProcess = spawn("python3", [scriptPath, JSON.stringify(echiquier), coup]);
+
+    let output = "";
+    pythonProcess.stdout.on("data", (data) => {
+        output += data.toString();
+    });
+
+    pythonProcess.stderr.on("data", (data) => {
+        console.error(`Erreur Python : ${data}`);
+    });
+
+    pythonProcess.on("close", (code) => {
+        console.log(`Processus Python terminé avec le code ${code}`);
+        
+        // Retourner l'échiquier mis à jour
+        res.json({ echiquier: JSON.parse(output) });
+    });
+});
+
+
 
 // Lancer le serveur
 app.listen(PORT, '0.0.0.0', () => {
