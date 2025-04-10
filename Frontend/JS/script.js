@@ -172,27 +172,68 @@ function refresh() {
 }
 
 function valider() {
-            depart=document.getElementById("origine").value
-            arrivée=document.getElementById("destination").value
+    let depart = document.getElementById("origine").value.toLowerCase();
+    let arrivee = document.getElementById("destination").value.toLowerCase();
 
-            alert("deplacer piece de "+depart+" a "+arrivée)
-} 
+    // Expression régulière pour valider les cases d'échecs (ex: e2, h7)
+    const regexCase = /^[a-h][1-8]$/;
 
+    // Vérification que les deux cases sont valides
+    if (!regexCase.test(depart) || !regexCase.test(arrivee)) {
+        document.getElementById("output").textContent = "❌ Case invalide. Exemple attendu : e2 vers e4";
+        return;
+    }
 
+    // Récupération de l'échiquier depuis le localStorage
+    const echiquier = JSON.parse(localStorage.getItem("echiquier"));
+    // Création du coup
+    const coup = depart + arrivee;
+
+    fetch("https://projet-nsi-sffl.onrender.com/api/jouer", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ coup, echiquier }) // Envoi de l'échiquier avec le coup
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log("Échiquier après coup :", data.echiquier);
+        localStorage.setItem("echiquier", JSON.stringify(data.echiquier)); // Mise à jour du localStorage
+        document.getElementById("output").textContent = "Coup joué !";
+    })
+    .catch(error => {
+        console.error("Erreur lors du coup :", error);
+        document.getElementById("output").textContent = "Erreur lors de l'envoi du coup.";
+    });
+}
+
+// Fonction pour afficher l'échiquier dans la console
+function afficherEchiquierConsole(echiquier) {
+    for (let i = 0; i < 8; i++) {
+        console.log(echiquier[i].join(' ')); // Affiche chaque ligne de l'échiquier
+    }
+}
+
+// Fonction pour démarrer la partie et récupérer l'échiquier
 function lancerPartie() {
-    fetch("https://projet-nsi-sffl.onrender.com/api/run-python")
-        .then(response => {
-            if (!response.ok) {
-                throw new Error("Échec de démarrage de la partie.");
-            }
-            return response.json();
-        })
+    fetch("https://projet-nsi-sffl.onrender.com/api/init")
+        .then(response => response.json())
         .then(data => {
-            console.log("Réponse du script Python :", data);
-            document.getElementById("output").textContent = data.output || "Aucune sortie.";
+            // Récupérer l'échiquier initial
+            const echiquier = data.echiquier;
+            
+            // Stocker l'échiquier dans localStorage pour une utilisation future
+            localStorage.setItem("echiquier", JSON.stringify(echiquier));
+
+            console.log("Échiquier initialisé :", echiquier);
+            document.getElementById("output").textContent = "Échiquier initialisé !";
         })
         .catch(error => {
-            console.error("Erreur lors du lancement de la partie :", error);
-            document.getElementById("output").textContent = "Erreur : " + error.message;
+            console.error("Erreur lors de l'initialisation :", error);
+            document.getElementById("output").textContent = "Erreur lors de l'initialisation.";
         });
 }
+
+
+
