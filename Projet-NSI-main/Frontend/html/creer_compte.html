@@ -6,13 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jeu d'échecs - Créer compte</title>
     <link rel="stylesheet" href="../CSS/style_creercompte.css">
-    <link rel="icon" type="image/x-icon" href="../Image/icon.webp">
+    <link rel="icon" type="image/x-icon" href="../Image/New-logo-page.webp">
 
 </head>
 <body>
     <header>
         <div id="logo">
-            <img src="../Image/newlogo.webp" alt="">
+            <img src="../Image/new_logo_v3.webp" alt="">
         </div>
         <div id="titre">
             <h1>Jeu d'échecs</h1>
@@ -20,7 +20,7 @@
         
         <nav>
             <ul>
-                <li><a href="../html/main.html">Accueil</a></li>
+                <li><a href="../../index.html">Accueil</a></li>
                 <li><a href="#">edgfg</a></li>
                 <li><a href="#">fzgzr</a></li>
             </ul>
@@ -40,7 +40,12 @@
             <input type="password" id="password" name="password" placeholder="Entrez votre mot de passe" required><br><br>
 
             <label for="valid-password">Confirmez le mot de passe</label>
-            <input type="password" name="valid-password" id="valid-password" placeholder="Entrez votre mot de passe" required><br><br>
+            <div style="position: relative;">
+                <input type="password" id="password" name="password" placeholder="Entrez votre mot de passe" style="padding-right: 30px;">
+                <span id="togglePassword" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer;">
+                    👁️
+                </span>
+            </div><br><br>
 
             <button type="submit">Créer un compte</button>
             <p id="errorMessage" style="display: none;"></p>

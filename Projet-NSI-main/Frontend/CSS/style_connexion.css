@@ -19,7 +19,7 @@
 
 body {
     font-family: 'Arial', sans-serif;
-    background: linear-gradient(135deg, #e0eafc, #cfdef3); /* Dégradé de fond */
+    background-color: #e0eafc;
     height: 100vh;
     display: flex;
     flex-direction: column;

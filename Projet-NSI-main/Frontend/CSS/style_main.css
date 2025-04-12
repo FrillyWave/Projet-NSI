@@ -1,0 +1,303 @@
+/* Header */
+header {
+    width: 100%;
+    background-color: #2575fc;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    font-size: 2em;
+    font-weight: bold;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    top: 0;
+    animation: slideIn 1s ease-out; /* Animation d'apparition */ 
+    position: fixed;
+    height: 150px;
+    
+}
+
+#logo{
+    text-align: center;
+    display: inline-block;
+    padding-right: 15px;
+}
+
+#titre{
+    text-align: center;
+    display: inline-block;
+}
+
+/* Animation pour l'apparition du header */
+@keyframes slideIn {
+    from {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Reset CSS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;    
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0 20px;
+    overflow-y: auto; /* Permet le défilement vertical si nécessaire */
+    height: 100vh; /* S'assure que le body occupe toute la hauteur de l'écran */
+    margin: 0;
+    padding: 0;
+    min-height: 100vh; /* Assure une hauteur minimum */
+    background-color: #e0eafc
+}
+
+#container {
+    flex: 1;
+    padding-top: 420px;
+    padding-bottom: 67px;
+}
+
+/* Styling du conteneur nav */
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+}
+
+/* Style des éléments de liste */
+nav ul li {
+    margin-right: 30px;
+}
+
+nav ul li:last-child {
+    margin-right: 0;
+}
+
+/* Liens dans la navigation */
+nav ul li a {
+    text-decoration: none;
+    color: white; /* Couleur blanche pour les liens */
+    font-size: 18px;
+    font-weight: bold;
+    text-transform: uppercase; /* Capitalisation du texte */
+    padding: 10px 15px;
+    transition: all 0.3s ease; /* Transition douce pour les animations */
+    border-radius: 5px;
+    position: relative;
+}
+
+/* Effet au survol des liens */
+nav ul li a::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: white;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s ease;
+}
+
+nav ul li a:hover {
+    background-color: rgba(255, 255, 255, 0.2); /* Effet de survol en transparence */
+    color: #ffeb3b; /* Changement de couleur au hover */
+}
+
+/* Lien en hover avec un effet */
+nav ul li a:hover::before {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+/* Liens actifs */
+nav ul li a:active {
+    color: #f39c12;
+}
+
+img{
+    height: 50px;
+}
+
+/* Conteneur principal du formulaire */
+#connexion-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 100px;
+    width: 100%;
+}
+
+/* Style du formulaire */
+#connexion-form {
+    text-align: center;
+    padding: 40px 25px;
+    background: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px; /* Limite la largeur du formulaire */
+}
+
+/* Effet au survol du bouton */
+#deplacement button:hover {
+    background-color: #6a11cb;
+    transform: scale(1.05);
+}
+
+/* Liens */
+#connexion-form p a {
+    color: #2575fc;
+    text-decoration: none;
+}
+
+#connexion-form p a:hover {
+    text-decoration: underline;
+}
+
+#echiquier {
+    width: 600px;
+    min-height: 600px; /* ou pas de height du tout si tu veux que ça s’adapte */
+    background-image: url(../Image/echiquier.webp);
+    background-size: 150px;
+    background-repeat: repeat;
+}
+
+#echiquier img {
+    height: 75px;
+    margin-right: -4.5px;
+    margin-bottom: -4.25px;
+
+}
+/* Labels et champs de texte */
+#deplacement label {
+    font-size: 1.1em;
+    color: #333;
+    margin: 10px 0 5px;
+}
+
+#deplacement input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1em;
+    background-color: #f8f8f8;
+    transition: border-color 0.3s ease;
+}
+
+#deplacement input:focus {
+    border-color: #2575fc;
+    outline: none;
+}
+
+/* Style du bouton */
+#deplacement button {
+    background-color: #2575fc;
+    margin: 5px;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 15px 30px;
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s;
+    width: 100%;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #2575fc;
+    color: white;
+    width: 100%;
+    font-size: 0.9em;
+    height: 57px;
+    position: fixed;
+    bottom: 0;
+}
+
+/* Media Queries pour rendre responsive */
+
+/* Mobile */
+@media (max-width: 767px) {
+    body {
+        padding: 0 10px; /* Réduire la marge sur mobile */
+    }
+
+    header {
+        font-size: 1.5em; /* Réduire la taille de la police du header */
+        padding: 15px;
+    }
+
+    nav ul {
+        flex-direction: column; /* Empile les éléments de navigation */
+    }
+
+    nav ul li {
+        margin-bottom: 15px; /* Ajouter un peu d'espace entre les liens */
+    }
+
+    #connexion-form {
+        padding: 30px 15px;
+        max-width: 90%; /* Utiliser une largeur plus large sur mobile */
+    }
+
+    #connexion-form input {
+        font-size: 0.9em; /* Réduire la taille de la police des champs */
+    }
+
+    #connexion-form button {
+        font-size: 1em; /* Réduire la taille du bouton */
+    }
+
+    #echiquier {
+        width: 100%; /* Adapter l'échiquier à la largeur de l'écran */
+        height: auto; /* Ajuster la hauteur en fonction de la largeur */
+    }
+}
+
+/* Tablette */
+@media (max-width: 1024px) {
+    body {
+        padding: 0 15px;
+    }
+
+    header {
+        font-size: 1.8em;
+        padding: 18px;
+    }
+
+    nav ul {
+        flex-direction: row;
+    }
+
+    nav ul li {
+        margin-right: 20px;
+    }
+
+    #connexion-form {
+        padding: 35px 20px;
+        max-width: 80%;
+    }
+}

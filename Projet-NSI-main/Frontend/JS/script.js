@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
     
             // Envoie les données au serveur via une requête POST
-            fetch('http://localhost:3002/login', {
+            fetch('https://projet-nsi-sffl.onrender.com/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ username, password })
@@ -50,54 +50,9 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     }
+})
 
     
-
-    /**
-     * Gestion du bouton "Supprimer le profil"
-     */
-    const deleteProfileButton = document.getElementById('deleteProfileButton');
-
-    if (deleteProfileButton) {
-        // Écoute l'événement de clic sur le bouton
-        deleteProfileButton.addEventListener('click', function (event) {
-            event.preventDefault(); // Empêche tout comportement par défaut du bouton
-
-            // Demande confirmation avant suppression du profil
-            const confirmDelete = confirm("Êtes-vous sûr de vouloir supprimer votre profil ?");
-            if (confirmDelete) {
-                const name = prompt("Entrez votre nom :");
-
-                if (!name) {
-                    alert("Nom requis pour supprimer le profil.");
-                    return;
-                }
-
-                // Envoie la requête pour supprimer le profil au serveur
-                fetch('http://localhost:3002/delete-user', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ username: name }) // Envoi des informations de l'utilisateur
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            alert("Votre profil a été supprimé avec succès !");
-                            localStorage.removeItem('userProfile'); // Supprime le profil du localStorage
-                            window.location.href = '../html/connexion.html'; // Redirige vers la page de connexion
-                        } else {
-                            alert(data.message || "Erreur lors de la suppression du profil.");
-                        }
-                    })
-                    .catch(error => {
-                        console.error("Erreur lors de la suppression :", error);
-                    });
-            }
-        });
-    } else {
-        console.warn("Bouton 'Supprimer le profil' introuvable sur cette page.");
-    }
-});
 
 document.addEventListener('DOMContentLoaded', () => {
     const signUpForm = document.getElementById('sign_up-form');
@@ -129,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             try {
                 // Envoie les données d'inscription au serveur
-                const response = await fetch('http://localhost:3002/register', {
+                const response = await fetch('https://projet-nsi-sffl.onrender.com/register', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ username, password })
@@ -166,9 +121,83 @@ document.addEventListener('DOMContentLoaded', () => {
 /**
  * Fonction pour quitter une fenêtre ou rediriger vers une autre page
  */
-function quitter() {
+function refresh() {
     let openedWindow
 
     openedWindow = window.open("../html/main.html");
     openedWindow = window.close("../html/main.html");
 }
+
+function valider() {
+    let depart = document.getElementById("origine").value.toLowerCase();
+    let arrivee = document.getElementById("destination").value.toLowerCase();
+
+    // Expression régulière pour valider les cases d'échecs (ex: e2, h7)
+    const regexCase = /^[a-h][1-8]$/;
+
+    // Vérification que les deux cases sont valides
+    if (!regexCase.test(depart) || !regexCase.test(arrivee)) {
+        document.getElementById("output").textContent = "❌ Case invalide. Exemple attendu : e2 vers e4";
+        return;
+    }
+
+    // Récupération de l'échiquier depuis le localStorage
+    const echiquier = JSON.parse(localStorage.getItem("echiquier"));
+    // Création du coup
+    const coup = depart + arrivee;
+
+    fetch("https://projet-nsi-sffl.onrender.com/api/jouer", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ coup, echiquier }) // Envoi de l'échiquier avec le coup
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log("Échiquier après coup :", data.echiquier);
+        localStorage.setItem("echiquier", JSON.stringify(data.echiquier)); // Mise à jour du localStorage
+        document.getElementById("output").textContent = "Coup joué !";
+    })
+    .catch(error => {
+        console.error("Erreur lors du coup :", error);
+        document.getElementById("output").textContent = "Erreur lors de l'envoi du coup.";
+    });
+}
+
+// Fonction pour afficher l'échiquier dans la console
+function afficherEchiquierConsole(echiquier) {
+    for (let i = 0; i < 8; i++) {
+        console.log(echiquier[i].join(' ')); // Affiche chaque ligne de l'échiquier
+    }
+}
+
+// Fonction pour démarrer la partie et récupérer l'échiquier
+function lancerPartie() {
+    fetch("https://projet-nsi-sffl.onrender.com/api/init")
+        .then(response => response.json())
+        .then(data => {
+            // Récupérer l'échiquier initial
+            const echiquier = data.echiquier;
+            
+            // Stocker l'échiquier dans localStorage pour une utilisation future
+            localStorage.setItem("echiquier", JSON.stringify(echiquier));
+
+            console.log("Échiquier initialisé :", echiquier);
+            document.getElementById("output").textContent = "Échiquier initialisé !";
+        })
+        .catch(error => {
+            console.error("Erreur lors de l'initialisation :", error);
+            document.getElementById("output").textContent = "Erreur lors de l'initialisation.";
+        });
+}
+
+
+const togglePassword = document.getElementById("togglePassword");
+    const passwordInput = document.getElementById("password");
+
+    togglePassword.addEventListener("click", () => {
+        const isPassword = passwordInput.type === "password";
+        passwordInput.type = isPassword ? "text" : "password";
+        togglePassword.textContent = isPassword ? "🙈" : "👁️";
+    })

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jeu d'échecs</title>
+    <link rel="stylesheet" href="../CSS/style_main.css">
+    <link rel="icon" type="image/x-icon" href="../Image/New-logo-page.webp">
+</head>
+<body>
+    <header>
+        <div id="logo">
+            <img src="../Image/new_logo_v3.webp" alt="">
+        </div>
+        <div id="titre">
+            <h1>Jeu d'échecs</h1>
+        </div>
+        
+        <nav>
+            <ul>
+                <li><a href="../../index.html">Accueil</a></li>
+                <li><a href="https://www.youtube.com/watch?v=YkFXGlHCn_o">abcde</a></li>
+                <li><a href="https://youtu.be/dQw4w9WgXcQ?feature=shared">raisctkley</a></li>
+            </ul>
+        </nav>
+        
+    </header>
+
+    <div id="container">
+    <button onclick="lancerPartie()">Lancer le jeu</button>
+    <div id="output"></div>
+
+    <div id="echiquier">
+
+        <img id="h8" src="../Image/tour_NWAAAR.webp" alt="">
+        <img id="h7" src="../Image/cavalier_NWAAAR.webp" alt="">
+        <img id="h6" src="../Image/fou_NWAAAR.webp" alt="">
+        <img id="h5" src="../Image/dame_NWAAAR.webp" alt="">
+        <img id="h4" src="../Image/roi_NWAAAR.webp" alt="">
+        <img id="h3" src="../Image/fou_NWAAAR.webp" alt="">
+        <img id="h2" src="../Image/cavalier_NWAAAR.webp" alt="">
+        <img id="h1" src="../Image/tour_NWAAAR.webp" alt="">
+
+        <img id="g8" src="../Image/pion_NWAAAR.webp" alt="">
+        <img id="g7" src="../Image/pion_NWAAAR.webp" alt="">
+        <img id="g6" src="../Image/pion_NWAAAR.webp" alt="">
+        <img id="g5" src="../Image/pion_NWAAAR.webp" alt="">
+        <img id="g4" src="../Image/pion_NWAAAR.webp" alt="">
+        <img id="g3" src="../Image/pion_NWAAAR.webp" alt="">
+        <img id="g2" src="../Image/pion_NWAAAR.webp" alt="">
+        <img id="g1" src="../Image/pion_NWAAAR.webp" alt="">
+
+        <img id="f8" src="../Image/Sans titre 11.png" alt="">
+        <img id="f7" src="../Image/Sans titre 11.png" alt="">
+        <img id="f6" src="../Image/Sans titre 11.png" alt="">
+        <img id="f5" src="../Image/Sans titre 11.png" alt="">
+        <img id="f4" src="../Image/Sans titre 11.png" alt="">
+        <img id="f3" src="../Image/Sans titre 11.png" alt="">
+        <img id="f2" src="../Image/Sans titre 11.png" alt="">
+        <img id="f1" src="../Image/Sans titre 11.png" alt="">
+
+        <img id="e8" src="../Image/Sans titre 11.png" alt="">
+        <img id="e7" src="../Image/Sans titre 11.png" alt="">
+        <img id="e6" src="../Image/Sans titre 11.png" alt="">
+        <img id="e5" src="../Image/Sans titre 11.png" alt="">
+        <img id="e4" src="../Image/Sans titre 11.png" alt="">
+        <img id="e3" src="../Image/Sans titre 11.png" alt="">
+        <img id="e2" src="../Image/Sans titre 11.png" alt="">
+        <img id="e1" src="../Image/Sans titre 11.png" alt="">
+
+        <img id="d8" src="../Image/Sans titre 11.png" alt="">
+        <img id="d7" src="../Image/Sans titre 11.png" alt="">
+        <img id="d6" src="../Image/Sans titre 11.png" alt="">
+        <img id="d5" src="../Image/Sans titre 11.png" alt="">
+        <img id="d4" src="../Image/Sans titre 11.png" alt="">
+        <img id="d3" src="../Image/Sans titre 11.png" alt="">
+        <img id="d2" src="../Image/Sans titre 11.png" alt="">
+        <img id="d1" src="../Image/Sans titre 11.png" alt="">
+
+        <img id="c8" src="../Image/Sans titre 11.png" alt="">
+        <img id="c7" src="../Image/Sans titre 11.png" alt="">
+        <img id="c6" src="../Image/Sans titre 11.png" alt="">
+        <img id="c5" src="../Image/Sans titre 11.png" alt="">
+        <img id="c4" src="../Image/Sans titre 11.png" alt="">
+        <img id="c3" src="../Image/Sans titre 11.png" alt="">
+        <img id="c2" src="../Image/Sans titre 11.png" alt="">
+        <img id="c1" src="../Image/Sans titre 11.png" alt="">
+
+        <img id="b8" src="../Image/pion_blanc.webp" alt="">
+        <img id="b7" src="../Image/pion_blanc.webp" alt="">
+        <img id="b6" src="../Image/pion_blanc.webp" alt="">
+        <img id="b5" src="../Image/pion_blanc.webp" alt="">
+        <img id="b4" src="../Image/pion_blanc.webp" alt="">
+        <img id="b3" src="../Image/pion_blanc.webp" alt="">
+        <img id="b2" src="../Image/pion_blanc.webp" alt="">
+        <img id="b1" src="../Image/pion_blanc.webp" alt="">
+
+        <img id="a8" src="../Image/tour_blanc.webp" alt="">
+        <img id="a7" src="../Image/cavalier_blanc.webp" alt="">
+        <img id="a6" src="../Image/fou_blanc.webp" alt="">
+        <img id="a5" src="../Image/dame_blanc.webp" alt="">
+        <img id="a4" src="../Image/roi_blanc.webp" alt="">
+        <img id="a3" src="../Image/fou_blanc.webp" alt="">
+        <img id="a2" src="../Image/cavalier_blanc.webp" alt="">
+        <img id="a1" src="../Image/tour_blanc.webp" alt="">
+
+    </div>
+
+    <form id="deplacement" method="POST">
+        <label for="origine"></label>
+        <input type="text" id="origine" name="origine" placeholder="Case de départ (Ex : A2)">
+    
+        <label for="destination"></label>
+        <input type="text" id="destination" name="destination" placeholder="Case d'arrivée (Ex : A4")>
+
+        <button type="button" id="valider_coup" onclick="valider()">valider</button>
+    </form>
+    </div>
+    <footer>
+        <p>All rights reserved ©</p>
+    </footer>
+
+    <script src="../JS/script.js"></script>
+</body>
+</html>
