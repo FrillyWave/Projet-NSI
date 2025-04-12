@@ -4,14 +4,36 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Page d'accueil</title>
+    <title>Accueil - Jeu d'échecs</title>
+    <link rel="stylesheet" href="./Frontend/CSS/style_index.css">
 </head>
 <body>
-    <p>
-        Ceci est une page d'accueil
-    </p>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="#">Accueil</a></li>
+                <li><a href="#">Jouer</a></li>
+                <li><a href="#">Tutoriels</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
 
-    <h2>Connexion</h2>
-    <p><a href="./Frontend/html/connexion.html">Viens là, viens dans mon van. J'ai des bonbons.</a></p>
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Bienvenue sur le site d'échecs</h1>
+            <p>Jouez des parties passionnantes contre des adversaires de tous niveaux.</p>
+            <a href="./Frontend/html/connexion.html" class="cta-button">Commencez à jouer</a>
+        </div>
+    </section>
+
+    <section class="info">
+        <h2>Comment ça marche ?</h2>
+        <p>Notre plateforme vous permet de jouer en ligne, d'améliorer vos compétences et de défier d'autres joueurs sur un échiquier interactif.</p>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Jeu d'échecs en ligne. Tous droits réservés.</p>
+    </footer>
 </body>
 </html>
