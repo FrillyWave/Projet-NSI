@@ -2,38 +2,27 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Accueil - Jeu d'échecs</title>
+    <title>Chess Arena - Accueil</title>
     <link rel="stylesheet" href="./Frontend/CSS/style_index.css">
 </head>
 <body>
-    <header>
-        <nav>
-            <ul>
-                <li><a href="#">Accueil</a></li>
-                <li><a href="#">Jouer</a></li>
-                <li><a href="#">Tutoriels</a></li>
-                <li><a href="#">Contact</a></li>
-            </ul>
-        </nav>
+
+    <header class="main-header">
+        <img src="./Frontend/Image/new_logo_v3.webp" alt="Logo" class="logo">
+        <h1>Jeu d'échecs</h1>
     </header>
 
-    <section class="hero">
-        <div class="hero-content">
-            <h1>Bienvenue sur le site d'échecs</h1>
-            <p>Jouez des parties passionnantes contre des adversaires de tous niveaux.</p>
-            <a href="./Frontend/html/connexion.html" class="cta-button">Commencez à jouer</a>
+    <main class="home-main">
+        <div class="home-card">
+            <h2>Bienvenue</h2>
+            <p>Défiez vos amis et découvrez qui est le meilleur joueur d'échecs</p>
+            <button onclick="window.location.href='./Frontend/html/connexion.html'">Commencer</button>
         </div>
-    </section>
-
-    <section class="info">
-        <h2>Comment ça marche ?</h2>
-        <p>Notre plateforme vous permet de jouer en ligne, d'améliorer vos compétences et de défier d'autres joueurs sur un échiquier interactif.</p>
-    </section>
+    </main>
 
     <footer>
-        <p>&copy; 2025 Jeu d'échecs en ligne. Tous droits réservés.</p>
+        &copy; 2025 Chess Arena. Tous droits réservés.
     </footer>
+
 </body>
 </html>

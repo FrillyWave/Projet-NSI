@@ -1,104 +1,74 @@
-/* Resetting some basic styles */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-/* Global styles */
+/* Reset de base */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f9;
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #dce7ff;
     color: #333;
-    line-height: 1.6;
 }
 
-/* Header styles */
-header {
-    background-color: #222;
-    padding: 10px 0;
-}
-
-nav ul {
+/* Header */
+.main-header {
+    background-color: #2575fc;
+    color: white;
+    padding: 20px;
+    text-align: center;
     display: flex;
+    align-items: center;
     justify-content: center;
-    list-style-type: none;
+    gap: 15px;
 }
 
-nav ul li {
-    margin: 0 15px;
+.main-header .logo {
+    height: 50px;
 }
 
-nav ul li a {
-    color: #fff;
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 18px;
-}
-
-nav ul li a:hover {
-    color: #ff9f00;
-}
-
-/* Hero Section */
-.hero {
-    background-image: url('https://your-image-link.com'); /* Replace with a background image */
-    background-size: cover;
-    background-position: center;
-    height: 80vh;
+/* Main accueil */
+.home-main {
     display: flex;
     justify-content: center;
     align-items: center;
+    min-height: calc(100vh - 160px); /* header + footer */
+}
+
+.home-card {
+    background-color: white;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
     text-align: center;
-    color: #fff;
+    max-width: 500px;
 }
 
-.hero h1 {
-    font-size: 3rem;
+.home-card h2 {
     margin-bottom: 20px;
+    font-size: 2em;
 }
 
-.hero p {
-    font-size: 1.2rem;
+.home-card p {
+    font-size: 1.1em;
     margin-bottom: 30px;
 }
 
-.cta-button {
-    background-color: #ff9f00;
-    color: #fff;
-    padding: 10px 30px;
-    text-decoration: none;
-    font-size: 1.2rem;
-    border-radius: 5px;
-    transition: background-color 0.3s;
+.home-card button {
+    padding: 15px 30px;
+    font-size: 1.1em;
+    background-color: #2575fc;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s ease;
 }
 
-.cta-button:hover {
-    background-color: #e68900;
-}
-
-/* Info Section */
-.info {
-    background-color: #fff;
-    padding: 40px 20px;
-    text-align: center;
-}
-
-.info h2 {
-    margin-bottom: 20px;
-    font-size: 2rem;
-}
-
-.info p {
-    font-size: 1.1rem;
-    max-width: 800px;
-    margin: 0 auto;
+.home-card button:hover {
+    background-color: #1a5de8;
+    transform: scale(1.05);
 }
 
 /* Footer */
 footer {
-    background-color: #222;
-    color: #fff;
-    padding: 10px 0;
+    background-color: #2575fc;
+    color: white;
     text-align: center;
+    padding: 15px;
 }
