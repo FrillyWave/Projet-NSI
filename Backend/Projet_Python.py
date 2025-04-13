@@ -1,4 +1,4 @@
-import copy
+from copy import deepcopy
 #Class pièce 
 
 def coordonnees_to_case(liste):
@@ -1182,11 +1182,11 @@ class Echequier:
         return Value_Blanc - Value_Noir
 
     def __repr__(self):
-        return f"Echequier : {self.Contenue}"
+        return self.Affichage_provisoire()
 
-def Best_Move(E, Couleur):
+def Best_Move(E, Couleur, init_move):
     echequier = E.GetContenue()
-    Back_up = echequier
+    Back_up = deepcopy(echequier)
     Liste = []
     for y in range(8):
         for x in range(8):
@@ -1195,23 +1195,60 @@ def Best_Move(E, Couleur):
                     ALL = echequier[y][x].Mouvement_Possible(E)
                     for i in range(len(ALL)):  
                         echequier[y][x].Move(ALL[i],E)
-                        Liste.append(( E.Avantage()))
-
-                    
+                        if init_move != None:
+                            Liste.append(((deepcopy(E), init_move), E.Avantage())) 
+                        else:
+                            Liste.append(((deepcopy(E), (coordonnees_to_case([(x,y)])[0],ALL[i])), E.Avantage()))#don't try to read this line, i'm going to hell alone
+                        E.SetContenue(deepcopy(Back_up))
+                        echequier = E.GetContenue()
+    sorted_by_second = sorted(Liste, key=lambda tup: tup[1], reverse=True) #WTF i don't understand what happend but it's working
+    return sorted_by_second
 
 
 def Bot(E, Couleur):
-    pass
+    L_echequier = Best_Move(E, Couleur, None)
+    L_echequier = L_echequier[0:len(L_echequier)//2]
+    Couleur = not(Couleur)
+    for x in range(5):
+        New_L_echequier = []
+        for y in range(len(L_echequier)):
+            provisoire = Best_Move(L_echequier[y][0][0], Couleur, L_echequier[y][0][1])
+            provisoire = provisoire[0: len(provisoire)//2]
+            for u in range(len(provisoire)):
+                New_L_echequier.append(provisoire[u])
+        Couleur = not(Couleur)
+        L_echequier = sorted(New_L_echequier, key=lambda tup: tup[1], reverse=True)
 
 
 
-def Main():
+    return L_echequier[0][0][1]
+
+def Main(): #Pour Joan
+    echiquier = json.loads(sys.argv[1])  #J'ai pas rééllemnt compris comment tu allais me permettre de récuperer ces variables mais je te fais confiance
+    coup = sys.argv[2]
+    E = Echequier(echequier)
+    Coordonnees = coup[0:2]
+    Coordonnees = Translate_coordonnees(Coordonnees)
+    Piece = echequier[Coordonnees[1]][Coordonnees[0]]
+    if Piece == None:
+        return False
+    if Piece.Move(coup[2:4], E):       #J'ai pas crée de fonction traiter coup car Move le fait déjà
+        echequier = E.GetContenue()
+        return echequier
+    else:
+        return False      #Je te renvois False si le déplacement est impossible
+
+
+
+def Main_old():
     Mode = input("PVP ou BOT ?")
     echequier = E.GetContenue()
     Turn = True
     loop = True
     while not(E.EchecMat_blanc()) and not(E.EchecMat_noir()) and not(E.Nulle_evidente()):
         print(E.Affichage_provisoire())
+        #print(Best_Move(E, Turn, None))
+        print(Bot(E, Turn))
         print(E.Avantage())
         loop = True
         if Turn:
@@ -1353,7 +1390,10 @@ E.Ajouter_Piece(k1)
 E.Ajouter_Piece(b2)
 E.Ajouter_Piece(h2)
 E.Ajouter_Piece(r2)
-print(Main())
+test = [("patate", 8), ("singe", 5), ("arbre", 19)]
+new_test = sorted(test, key=lambda tup: tup[1], reverse=True)
+print(new_test)
+print(Main_old())
 
 #=============================================================================
 #   
