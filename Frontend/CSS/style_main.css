@@ -236,7 +236,7 @@ footer {
     transition: background-color 0.3s ease, transform 0.2s;
 }
 
-#lancerPartie button {
+#lancerPartie{
     background-color: #2575fc;
     width: 600px;
     margin: 5px;
