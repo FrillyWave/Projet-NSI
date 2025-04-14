@@ -4,8 +4,7 @@ const bodyParser = require('body-parser');
 const fs = require('fs');
 const cors = require('cors');
 const bcrypt = require('bcryptjs');
-const axios = require('axios')
-const { spawn } = require('child_process')
+const { spawn } = require('child_process');
 
 const app = express();
 const PORT = 3002;
@@ -14,13 +13,13 @@ const PORT = 3002;
 app.use(cors());
 
 // Middleware pour parser le JSON dans le corps des requêtes
-app.use(bodyParser.json());
+app.use(express.json());
 
+// Serveur pour les fichiers statiques (Frontend)
 app.use(express.static(path.join(__dirname, "Frontend/html")));
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "Frontend/html/connexion.html"));
 });
-
 
 // Route pour ajouter un nouvel utilisateur
 app.post('/register', async (req, res) => {
@@ -35,7 +34,7 @@ app.post('/register', async (req, res) => {
     console.log("Nouvel utilisateur :", username);
 
     // Hachage du mot de passe
-    const hashedPassword = await bcrypt.hash(password, 10); // Le "10" est le nombre de rounds de salage, plus il est élevé, plus le processus est lent et sécurisé
+    const hashedPassword = await bcrypt.hash(password, 10); // Le "10" est le nombre de rounds de salage
 
     // Lire le fichier JSON où sont stockés les utilisateurs
     fs.readFile(filePath, 'utf8', (err, data) => {
@@ -103,53 +102,87 @@ app.post('/login', async (req, res) => {
     });
 });
 
-const scriptPath = path.join(__dirname, "Backend", "projet_Python.py")
+// Définir le chemin vers le script Python
+const scriptPath = path.join(__dirname, "Backend", "projet_Python.py");
 
+// Route GET pour initialiser l'échiquier
 app.get("/api/init", (req, res) => {
+    console.log("Appel à /api/init")
     // Lancer le script Python pour générer l'échiquier
     const pythonProcess = spawn("python3", [scriptPath]);
 
     let output = "";
+
+    // Capture la sortie du script Python
     pythonProcess.stdout.on("data", (data) => {
         output += data.toString();
     });
 
+    // Gestion des erreurs du script Python
     pythonProcess.stderr.on("data", (data) => {
         console.error(`Erreur Python : ${data}`);
     });
 
+    // Quand le processus Python se termine
     pythonProcess.on("close", (code) => {
-        console.log(`Processus Python terminé avec le code ${code}`);
-        
+        if (code !== 0) {
+            console.error(`Le processus Python a échoué avec le code ${code}`);
+            return res.status(500).json({ error: "Erreur lors de l'exécution du script Python." });
+        }
+
         // Retourner l'échiquier généré en JSON
-        res.json({ echiquier: JSON.parse(output) });
+        try {
+            const echiquier = JSON.parse(output);
+            res.json({ echiquier });
+        } catch (error) {
+            console.error("Erreur de parsing JSON : ", error);
+            res.status(500).json({ error: "Erreur lors du traitement du JSON." });
+        }
     });
 });
 
+// Route POST pour jouer un coup
 app.post("/api/jouer", (req, res) => {
+    console.log(">>> /api/jouer appelée avec :", req.body);
     const { coup, echiquier } = req.body;
 
-    // Traitement du coup dans le script Python
+    // Vérifier si les données sont présentes
+    if (!coup || !echiquier) {
+        return res.status(400).json({ error: "Les données requises (coup et echiquier) sont manquantes." });
+    }
+
+    // Lancer le script Python pour traiter le coup
     const pythonProcess = spawn("python3", [scriptPath, JSON.stringify(echiquier), coup]);
 
     let output = "";
+
+    // Capture la sortie du script Python
     pythonProcess.stdout.on("data", (data) => {
         output += data.toString();
     });
 
+    // Gestion des erreurs du script Python
     pythonProcess.stderr.on("data", (data) => {
         console.error(`Erreur Python : ${data}`);
     });
 
+    // Quand le processus Python se termine
     pythonProcess.on("close", (code) => {
-        console.log(`Processus Python terminé avec le code ${code}`);
-        
+        if (code !== 0) {
+            console.error(`Le processus Python a échoué avec le code ${code}`);
+            return res.status(500).json({ error: "Erreur lors de l'exécution du script Python." });
+        }
+
         // Retourner l'échiquier mis à jour
-        res.json({ echiquier: JSON.parse(output) });
+        try {
+            const echiquierMisAJour = JSON.parse(output);
+            res.json({ echiquier: echiquierMisAJour });
+        } catch (error) {
+            console.error("Erreur de parsing JSON : ", error);
+            res.status(500).json({ error: "Erreur lors du traitement du JSON." });
+        }
     });
 });
-
-
 
 // Lancer le serveur
 app.listen(PORT, '0.0.0.0', () => {
