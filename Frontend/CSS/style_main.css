@@ -192,12 +192,6 @@ footer {
     z-index: 10; /* Toujours au-dessus du contenu */
 }
 
-#divider {
-    min-height: 150px;
-    background-image: url(../Image/Sans\ titre\ 11.png);
-    background-size: 150px;
-    background-repeat: repeat;
-}
 /*
 #container {
     flex: 1;
