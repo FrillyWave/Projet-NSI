@@ -137,7 +137,7 @@ function valider() {
 
     // Vérification que les deux cases sont valides
     if (!regexCase.test(depart) || !regexCase.test(arrivee)) {
-        document.getElementById("output").textContent = "❌ Case invalide. Exemple attendu : e2 vers e4";
+        document.getElementById("output").textContent = "❌ Case invalide. Exemple attendu : E2 vers E4";
         return;
     }
 
