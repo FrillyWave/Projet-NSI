@@ -249,6 +249,11 @@ footer {
     transition: background-color 0.3s ease, transform 0.2s;
 }
 
+#lancerPartie:hover {
+    background-color: #6a11cb;
+    transform: scale(1.05);
+}
+
 /* Effet au survol du bouton */
 #deplacement button:hover {
     background-color: #6a11cb;
