@@ -45,25 +45,6 @@ header {
     display: inline-block;
 }
 
-/* Animation pour l'apparition du header */
-@keyframes slideIn {
-    from {
-        transform: translateY(-100%);
-        opacity: 0;
-    }
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
-}
-
-/* Reset CSS */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
 html, body {
     height: 100%;    
 }
