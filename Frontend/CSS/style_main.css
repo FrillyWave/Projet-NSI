@@ -10,32 +10,7 @@
     }
 }
 
-/* Reset CSS */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-/*
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #e0eafc;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 0 20px;
-    overflow-y: auto; /* Permet le défilement vertical si nécessaire 
-    height: 100vh; /* S'assure que le body occupe toute la hauteur de l'écran 
-    margin: 0;
-    min-height: 100vh; /* Assure une hauteur minimum 
-}
-
-
-
-/* Header 
+/* Header */
 header {
     width: 100%;
     background-color: #2575fc;
@@ -46,14 +21,66 @@ header {
     font-weight: bold;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     top: 0;
-    animation: slideIn 1s ease-out; /* Animation d'apparition *
+    animation: slideIn 1s ease-out; /* Animation d'apparition */ 
     position: fixed;
-    height: 4cm;
+    height: 150px;
     
-}*/
+}
+
+#logo{
+    text-align: center;
+    display: inline-block;
+    padding-right: 15px;
+}
+
+#titre{
+    text-align: center;
+    display: inline-block;
+}
+
+/* Animation pour l'apparition du header */
+@keyframes slideIn {
+    from {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Reset CSS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
 html, body {
     height: 100%;    
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0 20px;
+    overflow-y: auto; /* Permet le défilement vertical si nécessaire */
+    height: 100vh; /* S'assure que le body occupe toute la hauteur de l'écran */
+    margin: 0;
+    padding: 0;
+    min-height: 100vh; /* Assure une hauteur minimum */
+    background-color: #e0eafc
+}
+
+#container {
+    flex: 1;
+    padding-top: 420px;
+    padding-bottom: 67px;
 }
 
 /* Styling du conteneur nav */
@@ -101,15 +128,15 @@ nav ul li a::before {
     transition: transform 0.3s ease;
 }
 
+nav ul li a:hover {
+    background-color: rgba(255, 255, 255, 0.2); /* Effet de survol en transparence */
+    color: #ffeb3b; /* Changement de couleur au hover */
+}
+
 /* Lien en hover avec un effet */
 nav ul li a:hover::before {
     transform: scaleX(1);
     transform-origin: left;
-}
-
-nav ul li a:hover {
-    background-color: rgba(255, 255, 255, 0.2); /* Effet de survol en transparence */
-    color: #ffeb3b; /* Changement de couleur au hover */
 }
 
 /* Liens actifs */
@@ -121,84 +148,57 @@ img{
     height: 50px;
 }
 
-#logo{
-    text-align: center;
-    display: inline-block;
-    padding-right: 15px;
-}
-
-#titre{
-    text-align: center;
-    display: inline-block;
-}
-
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #e0eafc;
-    margin: 0;
-    padding: 0;
-    height: 100%;
+/* Conteneur principal du formulaire */
+#connexion-container {
     display: flex;
-    flex-direction: column;
-    align-items: center; /* Centre verticalement */
-    min-height: 100vh; /* Pour garantir que la hauteur minimale couvre la fenêtre */
-}
-
-header {
-    width: 100%;
-    background-color: #2575fc;
-    color: white;
-    text-align: center;
-    padding: 20px;
-    font-size: 2em;
-    font-weight: bold;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    position: fixed; /* Fixé en haut */
-    height: 150px;
-    z-index: 10; /* Toujours au-dessus du reste */
-}
-
-#container {
-    margin-top: 0; /* Supprimez les marges inutiles */
-    margin-top: 160px; /* Compense la hauteur du header et ajoute un petit espace */
-    flex: 1; /* Permet à #container d'occuper l'espace disponible */
-    padding-bottom: 67px; /* Compense la hauteur du footer */
-    width: 600px;
     justify-content: center;
-    display: flex;
     align-items: center;
-    flex-direction: column; /* Pour disposition verticale interne */
+    flex-direction: column;
+    margin-top: 100px;
+    width: 100%;
+}
+
+/* Style du formulaire */
+#connexion-form {
+    text-align: center;
+    padding: 40px 25px;
+    background: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px; /* Limite la largeur du formulaire */
+}
+
+/* Effet au survol du bouton */
+#deplacement button:hover {
+    background-color: #6a11cb;
+    transform: scale(1.05);
+}
+
+/* Liens */
+#connexion-form p a {
+    color: #2575fc;
+    text-decoration: none;
+}
+
+#connexion-form p a:hover {
+    text-decoration: underline;
 }
 
 #echiquier {
     width: 600px;
-    min-height: 600px;
-    margin: 0 auto; /* Centre l'échiquier */
+    min-height: 600px; /* ou pas de height du tout si tu veux que ça s’adapte */
     background-image: url(../Image/echiquier.webp);
     background-size: 150px;
     background-repeat: repeat;
 }
 
-footer {
-    text-align: center;
-    padding: 20px;
-    background-color: #2575fc;
-    color: white;
-    width: 100%;
-    font-size: 0.9em;
-    height: 57px;
-    position: fixed; /* Fixé en bas */
-    bottom: 0;
-    z-index: 10; /* Toujours au-dessus du contenu */
+#echiquier img {
+    height: 75px;
+    margin-right: -4.5px;
+    margin-bottom: -4.25px;
+
 }
-
-/*
-#container {
-    flex: 1;
-    padding-top: 10px;
-    padding-bottom: 67px;
-}*/
-
 /* Labels et champs de texte */
 #deplacement label {
     font-size: 1.1em;
@@ -207,8 +207,8 @@ footer {
 }
 
 #deplacement input {
+    width: 100%;
     padding: 12px;
-    width: 600px;
     margin: 10px 0;
     border: 1px solid #ddd;
     border-radius: 8px;
@@ -225,7 +225,6 @@ footer {
 /* Style du bouton */
 #deplacement button {
     background-color: #2575fc;
-    width: 600px;
     margin: 5px;
     color: white;
     border: none;
@@ -234,50 +233,10 @@ footer {
     font-size: 1.2em;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s;
+    width: 100%;
 }
 
-#lancerPartie{
-    background-color: #2575fc;
-    width: 600px;
-    margin-bottom: 10px;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    padding: 15px 30px;
-    font-size: 1.2em;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s;
-}
-
-#lancerPartie:hover {
-    background-color: #6a11cb;
-    transform: scale(1.05);
-}
-
-/* Effet au survol du bouton */
-#deplacement button:hover {
-    background-color: #6a11cb;
-    transform: scale(1.05);
-}
-
-
-/*
-#echiquier {
-    width: 600px;
-    min-height: 600px;
-    background-image: url(../Image/echiquier.webp);
-    background-size: 150px;
-    background-repeat: repeat;
-}*/
-
-#echiquier img {
-    height: 75px;
-    margin-right: -4.5px;
-    margin-bottom: -4.25px;
-
-}
-
-/* Footer *//*
+/* Footer */
 footer {
     text-align: center;
     padding: 20px;
@@ -289,7 +248,7 @@ footer {
     position: fixed;
     bottom: 0;
 }
-*/
+
 /* Media Queries pour rendre responsive */
 
 /* Mobile */
