@@ -18,6 +18,8 @@
 }
 
 /* Header */
+
+/* Header */
 header {
     width: 100%;
     background-color: #2575fc;
@@ -27,11 +29,9 @@ header {
     font-size: 2em;
     font-weight: bold;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    position: absolute;
     top: 0;
-    animation: slideIn 1s ease-out; /* Animation d'apparition */ 
-    position: fixed;
-    height: 150px;
-    
+    animation: slideIn 1s ease-out; /* Animation d'apparition */
 }
 
 #logo{
